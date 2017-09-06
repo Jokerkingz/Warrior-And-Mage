@@ -192,7 +192,8 @@ public class Scr_Global : MonoBehaviour {
 		}
 	}
 	void ControlAI(){
-		if (TurnCoolDown <= 0f){
+		//if (TurnCoolDown <= 0f)
+		{
 			float tOX = Object_Orc.transform.position.x,
 			tWX = Object_Warrior.transform.position.x,
 			tOZ = Object_Orc.transform.position.z,
