@@ -36,6 +36,8 @@ public class Scr_Global : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (Input.GetButton ("WarriorItem"))
+			Debug.Log ("Pressing Warrior Item");
 		switch (Global_AnimationState) {
 		case "StartAnimate":
 			Global_AnimationFrame = 0f;
@@ -103,13 +105,13 @@ public class Scr_Global : MonoBehaviour {
 		if (Input.GetAxis ("WarriorSkill1") < 0f) {
 			WarriorOrder = "Break";
 		}
-		if (Input.GetAxis ("LeftTrigger") > 0f)
+		if (Input.GetAxis ("WaitTrigger") > 0f ||Input.GetButton ("WarriorWait"))
 			WarriorOrder = "Wait";
 
 		if (Input.GetButton("MageSkill1")) {
 			MageOrder = "Push";
 		}
-		if (Input.GetAxis ("LeftTrigger") < 0f)
+		if (Input.GetAxis ("WaitTrigger") < 0f||Input.GetButton ("MageWait"))
 			MageOrder = "Wait";
 		if (Input.GetKey(KeyCode.Space))
 			Debug.Log("Warrior " + WarriorOrder + " Mage " + MageOrder);

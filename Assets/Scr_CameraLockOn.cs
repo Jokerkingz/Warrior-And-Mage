@@ -18,6 +18,13 @@ public class Scr_CameraLockOn : MonoBehaviour {
 		vObj_Warrior = GameObject.FindGameObjectWithTag ("Warrior");
 		vObj_Mage = GameObject.FindGameObjectWithTag ("Mage");
 		vCamera = GameObject.FindGameObjectWithTag ("MainCamera");
+
+		Vector3 tWarPoint = Vector3.Scale (vObj_Warrior.transform.position, new Vector3 (1f, 0f, 1f));
+		Vector3 tMagPoint = Vector3.Scale (vObj_Mage.transform.position, new Vector3 (1f, 0f, 1f));
+		float tDistance = Vector3.Distance (tWarPoint, tMagPoint);
+		Vector3 tVectorDifference = ((tWarPoint - tMagPoint) / 2f);
+		vVectDestination = new Vector3 (tWarPoint.x - tVectorDifference.x, 1f, tWarPoint.z - tVectorDifference.z);
+		transform.position = vVectDestination;
 	}
 	
 	// Update is called once per frame

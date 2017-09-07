@@ -114,13 +114,12 @@ public class Scr_ActionAnimation : MonoBehaviour {
 			if (vAnimationState == "Move") {
 				vAnimationState = "MoveBack";
 				vPrevVect3 = new Vector3 (Mathf.Round (transform.position.x), 1f, Mathf.Round (transform.position.z));
-				Debug.Log ("Move Back");
+
 			}
 		}
 		else if (Other.tag == "Warrior" || Other.tag == "Mage" || Other.tag == "Enemy" ){
 			if (vAnimationState == "Move") {
 				vAnimationState = "MoveBack";
-				Debug.Log ("Move Back");
 				}
 			}
 	}
