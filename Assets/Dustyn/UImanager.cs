@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UImanager : MonoBehaviour {
 
 	//UI
-	[Header("Warrior UI References")]
+	/*[Header("Warrior UI References")]
 	public Slider healthBarWarrior;
 	public Text healthTextWarrior;
 	public Slider staminaBar;
@@ -25,11 +25,18 @@ public class UImanager : MonoBehaviour {
 	public Slider mageExpBar;
 	public Text mageExpText;
 	public Text mageLevel;
+*/
+
+	[Header("UI references")]
+	public Slider healthBar;
+	public Slider specBar;
+	public Slider expBar;
 
 	//Characters
 	[Header("Characters References")]
-	public statManager smWarrior;
-	public statManager smMage;
+	//public statManager smWarrior;
+	//public statManager smMage;
+	public statManager sm;
 
 	private static bool UIExist;
 
@@ -45,7 +52,7 @@ public class UImanager : MonoBehaviour {
 	}
 
 	void Update () {
-		
+		/*
 		//WARRIOR HEALTH
 		healthBarWarrior.maxValue = smWarrior.maxHealth;
 		healthBarWarrior.value = smWarrior.curHealth;
@@ -78,6 +85,19 @@ public class UImanager : MonoBehaviour {
 		mageExpBar.value = smMage.curExp;
 		mageExpText.text = "XP: " + smMage.curExp + "/" + smMage.maxExp;
 		mageLevel.text = "MAGE (LEVEL " + smMage.curLvl + ")";
+		*/
+
+		//HEALTH BAR
+		healthBar.maxValue =sm.maxHealth;
+		healthBar.value = sm.curHealth;
+
+		//SPEC BAR
+		specBar.maxValue=sm.maxSpec;
+		specBar.value = sm.curSpec;
+
+		//EXPERIENCE BAR
+		expBar.maxValue =sm.maxExp;
+		expBar.value = sm.curExp;
 	}
 		
 }
