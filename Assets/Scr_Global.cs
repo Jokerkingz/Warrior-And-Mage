@@ -16,11 +16,27 @@ public class Scr_Global : MonoBehaviour {
 	private Transform Enemy_Previous;
 	private Transform Enemy_Next;
 
+	public string SubStatus; // Paused, options, shop, Item, Play
+	public string[] SkillList;
+
 	public float vDeltaTimeAdjustor;
 
 	// Global shared variable
 	public string Global_AnimationState;
 	public float Global_AnimationFrame;
+
+
+	// Float for Canvas and Item usage
+	public float Global_WarriorItem;
+	public float Global_MageItem;
+
+	// Potion can only be used once per turn. False - The player hasn't used one yet.
+	private bool vPotionUsed= false;
+	private bool vElixerUsed = false;
+
+	// Inventory System
+	public int Global_HealthPotion_Count = 5;
+	public int Global_ElixerPotion_Count = 5;
 
 	// Use this for initialization
 	void Start () {
@@ -32,6 +48,11 @@ public class Scr_Global : MonoBehaviour {
 
 		Global_AnimationState = "EndAnimate";
 		Global_AnimationFrame = 0f;
+		SubStatus = "Play";
+		Global_WarriorItem = 0f;
+		Global_MageItem = 0f;
+		SkillList = new string[8]{"BasicAttack","Smash","Roar","Swing","BasicAttack","Push","Ice Spear","Block"};
+
 	}
 	
 	// Update is called once per frame
@@ -54,65 +75,23 @@ public class Scr_Global : MonoBehaviour {
 			Global_AnimationFrame = 1f;
 			break;
 		}
-
-		if (TurnCoolDown > 0)
-			TurnCoolDown -= 1.0f;
 		if (Global_AnimationState == "EndAnimate" && Is_Everyone_Idle())
-		switch (CurrentTurn) {
-		case "Player":
-			InputCheck ();
-			break;
-		case "AI":
-			if (GameObject.FindGameObjectsWithTag ("Enemy").Length > 0)
-				ControlAI ();
-			else
-				CurrentTurn = "Player";
-			break;
-
-
-		}
+			switch (CurrentTurn) {
+				case "Player":
+					InputCheck ();
+					break;
+				case "AI":
+					if (GameObject.FindGameObjectsWithTag ("Enemy").Length > 0)
+						ControlAI ();
+					else
+						CurrentTurn = "Player";
+					break;
+			}
 	}
 	void InputCheck(){
-		string WarriorOrder = "None";
-		string MageOrder = "None";
+		string WarriorOrder = WarriorInput();
+		string MageOrder = MageInput();
 
-		/// Player 1
-		if (Input.GetAxis ("Analog1Y") * Mathf.Sign (Input.GetAxis ("Analog1Y")) > Input.GetAxis ("Analog1X") * Mathf.Sign (Input.GetAxis ("Analog1X"))) {
-			if (Input.GetAxis ("Analog1Y") > 0f)
-				WarriorOrder = "MoveUp";
-			else if (Input.GetAxis ("Analog1Y") < 0f)
-				WarriorOrder = "MoveDown";
-		} else {
-			if (Input.GetAxis("Analog1X") < 0f) WarriorOrder = "MoveLeft";
-			else if (Input.GetAxis("Analog1X") > 0f) WarriorOrder = "MoveRight";
-		}
-		/// Player 2
-		if (Input.GetAxis ("Analog2Y") * Mathf.Sign (Input.GetAxis ("Analog2Y")) > Input.GetAxis ("Analog2X") * Mathf.Sign (Input.GetAxis ("Analog2X"))) {
-			if (Input.GetAxis ("Analog2Y") > 0f)
-				MageOrder = "MoveUp";
-			else if (Input.GetAxis ("Analog2Y") < 0f)
-				MageOrder = "MoveDown";
-		} else {
-			if (Input.GetAxis("Analog2X") < 0f)
-				MageOrder = "MoveLeft";
-			else if (Input.GetAxis("Analog2X") > 0f)
-				MageOrder = "MoveRight";
-		}
-		/// 
-		if (Input.GetAxis ("WarriorAttack") < 0f) {
-			WarriorOrder = "Attack";
-		}
-		if (Input.GetAxis ("WarriorSkill1") < 0f) {
-			WarriorOrder = "Break";
-		}
-		if (Input.GetAxis ("WaitTrigger") > 0f ||Input.GetButton ("WarriorWait"))
-			WarriorOrder = "Wait";
-
-		if (Input.GetButton("MageSkill1")) {
-			MageOrder = "Push";
-		}
-		if (Input.GetAxis ("WaitTrigger") < 0f||Input.GetButton ("MageWait"))
-			MageOrder = "Wait";
 		if (Input.GetKey(KeyCode.Space))
 			Debug.Log("Warrior " + WarriorOrder + " Mage " + MageOrder);
 
@@ -142,6 +121,81 @@ public class Scr_Global : MonoBehaviour {
 		WarriorOrder = "None";
 		MageOrder = "None";
 	}
+
+	string WarriorInput(){
+		string Order = "None";
+		if (!Input.GetButton ("WarriorItem")) {
+			if (Input.GetAxis ("Analog1Y") * Mathf.Sign (Input.GetAxis ("Analog1Y")) > Input.GetAxis ("Analog1X") * Mathf.Sign (Input.GetAxis ("Analog1X"))) {
+				if (Input.GetAxis ("Analog1Y") > 0f)
+					Order = "MoveUp";
+				else if (Input.GetAxis ("Analog1Y") < 0f)
+					Order = "MoveDown";
+			} else {
+				if (Input.GetAxis ("Analog1X") < 0f)
+					Order = "MoveLeft";
+				else if (Input.GetAxis ("Analog1X") > 0f)
+					Order = "MoveRight";
+			}
+			if (Input.GetAxis ("WarriorAttack") < 0f || Input.GetButton ("WarriorAttack")) {
+				Order = SkillList[0];
+			}
+			if (Input.GetAxis ("WarriorSkill1") < 0f || Input.GetButton ("WarriorSkill1")) {
+				Order = SkillList[1];
+			}
+			if (Input.GetAxis ("WarriorSkill2") < 0f || Input.GetButton ("WarriorSkill2")) {
+				Order = SkillList[2];
+			}
+			if (Input.GetAxis ("WarriorSkill3") < 0f || Input.GetButton ("WarriorSkill3")) {
+				Order = SkillList[3];
+			}
+			if (Input.GetAxis ("WaitTrigger") > 0f || Input.GetButton ("WarriorWait"))
+				Order = "Wait";
+		} else {
+			if (Input.GetAxis ("WarriorAttack") < 0f || Input.GetButton ("WarriorAttack")) {
+				Order = "Attack";
+			}
+			if (Input.GetAxis ("WarriorSkill1") < 0f || Input.GetButton ("WarriorSkill1")) {
+				Order = "Break";
+			}
+			if (Input.GetAxis ("WarriorSkill1") < 0f || Input.GetButton ("WarriorSkill1")) {
+				Order = "Break";
+			}
+		}
+		return Order;
+	}
+
+	string MageInput(){
+		string Order = "None";
+		if (!Input.GetButton ("MageItem")) {
+			if (Input.GetAxis ("Analog2Y") * Mathf.Sign (Input.GetAxis ("Analog2Y")) > Input.GetAxis ("Analog2X") * Mathf.Sign (Input.GetAxis ("Analog2X"))) {
+				if (Input.GetAxis ("Analog2Y") > 0f)
+					Order = "MoveUp";
+				else if (Input.GetAxis ("Analog2Y") < 0f)
+					Order = "MoveDown";
+			} else {
+				if (Input.GetAxis ("Analog2X") < 0f)
+					Order = "MoveLeft";
+				else if (Input.GetAxis ("Analog2X") > 0f)
+					Order = "MoveRight";
+			}
+			if (Input.GetButton ("MageAttack")) {
+				Order = SkillList[4];
+			}
+			if (Input.GetButton ("MageSkill1")) {
+				Order = SkillList[5];
+			}
+			if (Input.GetButton ("MageSkill2")) {
+				Order = SkillList[6];
+			}
+			if (Input.GetButton ("MageSkill3")) {
+				Order = SkillList[7];
+			}
+			if (Input.GetAxis ("WaitTrigger") < 0f || Input.GetButton ("MageWait"))
+				Order = "Wait";
+		}
+		return Order;
+	}
+
 
 	void AttackEnemy(){
 		if (GameObject.FindGameObjectsWithTag ("Enemy").Length > 0) {
@@ -243,7 +297,10 @@ public class Scr_Global : MonoBehaviour {
 			if (tThat.GetComponent<Scr_ActionAnimation>().vAnimationState != "Idle")
 				tEveryoneisIdle = false;
 		}
-
+		tThose = GameObject.FindGameObjectsWithTag ("AnimationObject");
+		foreach (GameObject tThat in tThose) {
+			tEveryoneisIdle = false;
+			}
 		return tEveryoneisIdle;
 	}
 }
