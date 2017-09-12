@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class statManager : MonoBehaviour {
 
-	//public GameObject target;
+	[Header("Stat Ints")]
 
 	public int maxHealth;
 	public int curHealth;
@@ -18,12 +18,19 @@ public class statManager : MonoBehaviour {
 	public int maxLvl;
 	public int curLvl;
 
+	[Header("KeyCodes for testing")]
 	public KeyCode DrainHealth;
 	public KeyCode ReplenishHealth;
 	public KeyCode DrainSpec;
 	public KeyCode ReplenishSpec;
 
 	public KeyCode AddXP;
+
+	[Header("References")]
+	public GameObject healthBar;
+	public GameObject specBar;
+	public GameObject expBar;
+	public GameObject lvlTxt;
 
 	void Start () {
 		
@@ -41,19 +48,24 @@ public class statManager : MonoBehaviour {
 
 		if (Input.GetKeyDown (DrainHealth)) {
 			curHealth -= 10;
+			healthBar.SendMessage ("Appear");
 		}
 		if (Input.GetKeyDown (ReplenishHealth)) {
 			curHealth += 10;
+			healthBar.SendMessage ("Appear");
 		}
 		if (Input.GetKeyDown (DrainSpec)) {
 			curSpec -= 10;
+			specBar.SendMessage ("Appear");
 		}
 		if (Input.GetKeyDown (ReplenishSpec)) {
 			curSpec += 10;
+			specBar.SendMessage ("Appear");
 		}
 
 		if (Input.GetKeyDown (AddXP)) {
 			curExp += 10;
+			expBar.SendMessage ("Appear");
 		}
 
 		Stats ();
@@ -75,6 +87,7 @@ public class statManager : MonoBehaviour {
 		}
 			
 		if (curExp >= maxExp) {
+			lvlTxt.SendMessage ("Appear");
 			curLvl += 1;
 			curExp = 0;
 			maxExp *= 2;
