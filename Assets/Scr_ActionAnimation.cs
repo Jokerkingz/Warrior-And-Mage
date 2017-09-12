@@ -10,6 +10,7 @@ public class Scr_ActionAnimation : MonoBehaviour {
 	public string vInputType;
 	public AnimationCurve vBounce;
 	public Scr_Global vGlobal; 
+	public string vDirection;
 	// Use this for initialization
 	void Start () {
 		vAnimationState = "Idle";
@@ -23,35 +24,45 @@ public class Scr_ActionAnimation : MonoBehaviour {
 	void Update () {
 		switch (vAnimationState) {
 		case "Idle":
-
-
 			break;
-		case "StartMoving":
+		case "StartActing":
 			vPrevVect3 = transform.position;
 			switch (vInputType) {
 			case "MoveUp":
-				vNextVect3 = transform.position + new Vector3 (1f, 0f, 0f);
+				vDirection = "North";
+				vNextVect3 = transform.position + DirectionToPoint(vDirection,1);
 				break;
 			case "MoveDown":
-				vNextVect3 = transform.position + new Vector3 (-1f, 0f, 0f);
+				vDirection = "South";
+				vNextVect3 = transform.position + DirectionToPoint(vDirection,1);
 				break;
 			case "MoveLeft":
-				vNextVect3 = transform.position + new Vector3 (0f, 0f, -1f);
+				vDirection = "West";
+				vNextVect3 = transform.position + DirectionToPoint(vDirection,1);
 				break;
 			case "MoveRight":
-				vNextVect3 = transform.position + new Vector3 (0f, 0f, 1f);
+				vDirection = "East";
+				vNextVect3 = transform.position + DirectionToPoint(vDirection,1);
 				break;
 			case "PushUp":
-				vNextVect3 = transform.position + new Vector3 (3f, 0f, 0f);
+				vDirection = "North";
+				vNextVect3 = transform.position + DirectionToPoint(vDirection,3);
 				break;
 			case "PushDown":
-				vNextVect3 = transform.position + new Vector3 (-3f, 0f, 0f);
+				vDirection = "South";
+				vNextVect3 = transform.position + DirectionToPoint(vDirection,3);
 				break;
 			case "PushLeft":
-				vNextVect3 = transform.position + new Vector3 (0f, 0f, -3f);
+				vDirection = "West";
+				vNextVect3 = transform.position + DirectionToPoint(vDirection,3);
 				break;
 			case "PushRight":
-				vNextVect3 = transform.position + new Vector3 (0f, 0f, 3f);
+				vDirection = "East";
+				vNextVect3 = transform.position + DirectionToPoint(vDirection,3);
+				break;
+			case "BasicAttack":
+				vNextVect3 = transform.position;
+				AttackEnemy ();
 				break;
 			case "Wait":
 				vNextVect3 = transform.position;
@@ -105,8 +116,6 @@ public class Scr_ActionAnimation : MonoBehaviour {
 				transform.position = new Vector3(transform.position.x,vBounce.Evaluate (vAnimationFrame)+1f,transform.position.z);
 			}
 			break;
-
-
 		}
 	}
 	void OnTriggerStay(Collider Other){
@@ -114,7 +123,6 @@ public class Scr_ActionAnimation : MonoBehaviour {
 			if (vAnimationState == "Move") {
 				vAnimationState = "MoveBack";
 				vPrevVect3 = new Vector3 (Mathf.Round (transform.position.x), 1f, Mathf.Round (transform.position.z));
-
 			}
 		}
 		else if (Other.tag == "Warrior" || Other.tag == "Mage" || Other.tag == "Enemy" ){
@@ -122,5 +130,41 @@ public class Scr_ActionAnimation : MonoBehaviour {
 				vAnimationState = "MoveBack";
 				}
 			}
+	}
+	void AttackEnemy(){
+		/* Generate a swipe in a given spot
+		if (GameObject.FindGameObjectsWithTag ("Enemy").Length > 0) {
+			float tOX = Object_Orc.transform.position.x,
+			tWX = Object_Warrior.transform.position.x,
+			tOZ = Object_Orc.transform.position.z,
+			tWZ = Object_Warrior.transform.position.z;
+			if (Vector2.Distance (new Vector2 (tOX, tOZ), new Vector2 (tWX, tWZ)) < 2f) {
+				Object_Orc.GetComponent<Scr_SFX_Damage_Blinker> ().vBlinkFrame = .01f;
+			}
+			Object_Warrior.GetComponent<Scr_ActionAnimation> ().vAnimationState = "StartActing";
+			Object_Warrior.GetComponent<Scr_ActionAnimation> ().vInputType = "Wait";
+		}
+		*/
+	}
+	Vector3 DirectionToPoint(string tDirection,int tMultiplier){
+		Vector3 tResult;
+		switch (tDirection) {
+		case "North":
+			tResult = (new Vector3 (-1f, 0f, 0f) * tMultiplier);
+			break;
+		case "East":
+			tResult = (new Vector3 (0f, 0f, 1f) * tMultiplier);
+			break;
+		case "South":
+			tResult = (new Vector3 (1f, 0f, 0f) * tMultiplier);
+			break;
+		case "West":
+			tResult = (new Vector3 (0f, 0f, -1f) * tMultiplier);
+			break;
+		default:
+			tResult = (new Vector3 (0f, 0f, -1f) * tMultiplier);
+			break;
+		}
+		return tResult;
 	}
 }

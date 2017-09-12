@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Scr_Global : MonoBehaviour {
 	public string CurrentTurn;
@@ -37,6 +38,14 @@ public class Scr_Global : MonoBehaviour {
 	// Inventory System
 	public int Global_HealthPotion_Count = 5;
 	public int Global_ElixerPotion_Count = 5;
+
+	// Targeting Icon
+	public float Global_WarriorIconRotation = 0f;
+	public float Global_MageIconRotationt   = 180f;
+
+	public GameObject vTextA;
+	public GameObject vTextB;
+	public GameObject vTextC;
 
 	// Use this for initialization
 	void Start () {
@@ -91,29 +100,17 @@ public class Scr_Global : MonoBehaviour {
 	void InputCheck(){
 		string WarriorOrder = WarriorInput();
 		string MageOrder = MageInput();
-
+		vTextA.GetComponent<Text> ().text = WarriorOrder;
+		vTextB.GetComponent<Text> ().text = MageOrder;
 		if (Input.GetKey(KeyCode.Space))
 			Debug.Log("Warrior " + WarriorOrder + " Mage " + MageOrder);
 
-		if (WarriorOrder != "None" && MageOrder != "None" && TurnCoolDown <= 0f) {
-			if (WarriorOrder == "Attack") {
-				AttackEnemy ();
-			}
-			else if (WarriorOrder == "Break") {
-				BreakWall ();
-			}
-			else 
-			{
-				Object_Warrior.GetComponent<Scr_ActionAnimation> ().vAnimationState = "StartMoving";
-				Object_Warrior.GetComponent<Scr_ActionAnimation> ().vInputType = WarriorOrder;
-			}
-			if (MageOrder == "Push") {
-				PushSpell ();
-			} else {
-				Object_Mage.GetComponent<Scr_ActionAnimation> ().vAnimationState = "StartMoving";
-				Object_Mage.GetComponent<Scr_ActionAnimation> ().vInputType = MageOrder;
-			}
-			TurnCoolDown = 30.0f;
+		if (WarriorOrder != "None" && MageOrder != "None") {
+			Object_Warrior.GetComponent<Scr_ActionAnimation> ().vAnimationState = "StartActing";
+			Object_Warrior.GetComponent<Scr_ActionAnimation> ().vInputType = WarriorOrder;
+			Object_Mage.GetComponent<Scr_ActionAnimation> ().vAnimationState = "StartActing";
+			Object_Mage.GetComponent<Scr_ActionAnimation> ().vInputType = MageOrder;
+
 			CurrentTurn = "AI";
 			Global_AnimationState = "StartAnimate";
 		}
@@ -126,9 +123,9 @@ public class Scr_Global : MonoBehaviour {
 		string Order = "None";
 		if (!Input.GetButton ("WarriorItem")) {
 			if (Input.GetAxis ("Analog1Y") * Mathf.Sign (Input.GetAxis ("Analog1Y")) > Input.GetAxis ("Analog1X") * Mathf.Sign (Input.GetAxis ("Analog1X"))) {
-				if (Input.GetAxis ("Analog1Y") > 0f)
+				if (Input.GetAxis ("Analog1Y") < 0f)
 					Order = "MoveUp";
-				else if (Input.GetAxis ("Analog1Y") < 0f)
+				else if (Input.GetAxis ("Analog1Y") > 0f)
 					Order = "MoveDown";
 			} else {
 				if (Input.GetAxis ("Analog1X") < 0f)
@@ -142,17 +139,17 @@ public class Scr_Global : MonoBehaviour {
 			if (Input.GetAxis ("WarriorSkill1") < 0f || Input.GetButton ("WarriorSkill1")) {
 				Order = SkillList[1];
 			}
-			if (Input.GetAxis ("WarriorSkill2") < 0f || Input.GetButton ("WarriorSkill2")) {
+			if (Input.GetAxis ("WarriorSkill2") > 0f || Input.GetButton ("WarriorSkill2")) {
 				Order = SkillList[2];
 			}
-			if (Input.GetAxis ("WarriorSkill3") < 0f || Input.GetButton ("WarriorSkill3")) {
+			if (Input.GetAxis ("WarriorSkill3") > 0f || Input.GetButton ("WarriorSkill3")) {
 				Order = SkillList[3];
 			}
 			if (Input.GetAxis ("WaitTrigger") > 0f || Input.GetButton ("WarriorWait"))
 				Order = "Wait";
 		} else {
 			if (Input.GetAxis ("WarriorAttack") < 0f || Input.GetButton ("WarriorAttack")) {
-				Order = "Attack";
+				Order = "BasicAttack";
 			}
 			if (Input.GetAxis ("WarriorSkill1") < 0f || Input.GetButton ("WarriorSkill1")) {
 				Order = "Break";
@@ -168,9 +165,9 @@ public class Scr_Global : MonoBehaviour {
 		string Order = "None";
 		if (!Input.GetButton ("MageItem")) {
 			if (Input.GetAxis ("Analog2Y") * Mathf.Sign (Input.GetAxis ("Analog2Y")) > Input.GetAxis ("Analog2X") * Mathf.Sign (Input.GetAxis ("Analog2X"))) {
-				if (Input.GetAxis ("Analog2Y") > 0f)
+				if (Input.GetAxis ("Analog2Y") < 0f)
 					Order = "MoveUp";
-				else if (Input.GetAxis ("Analog2Y") < 0f)
+				else if (Input.GetAxis ("Analog2Y") > 0f)
 					Order = "MoveDown";
 			} else {
 				if (Input.GetAxis ("Analog2X") < 0f)
@@ -206,10 +203,11 @@ public class Scr_Global : MonoBehaviour {
 			if (Vector2.Distance (new Vector2 (tOX, tOZ), new Vector2 (tWX, tWZ)) < 2f) {
 				Object_Orc.GetComponent<Scr_SFX_Damage_Blinker> ().vBlinkFrame = .01f;
 			}
-			Object_Warrior.GetComponent<Scr_ActionAnimation> ().vAnimationState = "StartMoving";
+			Object_Warrior.GetComponent<Scr_ActionAnimation> ().vAnimationState = "StartActing";
 			Object_Warrior.GetComponent<Scr_ActionAnimation> ().vInputType = "Wait";
 		}
 	}
+
 	void BreakWall(){
 		if (GameObject.FindGameObjectsWithTag ("Breakable").Length > 0) {
 			GameObject tWall = GameObject.FindGameObjectWithTag ("Breakable");
@@ -218,7 +216,7 @@ public class Scr_Global : MonoBehaviour {
 			tOZ = tWall.transform.position.z,
 			tWZ = Object_Warrior.transform.position.z;
 			if (Vector2.Distance (new Vector2 (tOX, tOZ), new Vector2 (tWX, tWZ)) < 2f) {
-				Object_Warrior.GetComponent<Scr_ActionAnimation> ().vAnimationState = "StartMoving";
+				Object_Warrior.GetComponent<Scr_ActionAnimation> ().vAnimationState = "StartActing";
 				Destroy (tWall.gameObject);
 				Object_Warrior.GetComponent<Scr_ActionAnimation> ().vInputType = "Wait";
 			}
@@ -229,17 +227,17 @@ public class Scr_Global : MonoBehaviour {
 		tWX = Object_Warrior.transform.position.x,
 		tMZ = Object_Mage.transform.position.z,
 		tWZ = Object_Warrior.transform.position.z;
-		Object_Mage.GetComponent<Scr_ActionAnimation> ().vAnimationState = "StartMoving";
+		Object_Mage.GetComponent<Scr_ActionAnimation> ().vAnimationState = "StartActing";
 		Object_Mage.GetComponent<Scr_ActionAnimation> ().vInputType = "Wait";
 		if (Vector2.Distance(new Vector2(tMX,tMZ),new Vector2(tWX,tWZ))<1.1f){
 			if ((tMX-tWX)*Mathf.Sign(tMX-tWX) > (tMZ-tWZ)*Mathf.Sign(tMZ-tWZ)) {
-				Object_Warrior.GetComponent<Scr_ActionAnimation> ().vAnimationState = "StartMoving";
+				Object_Warrior.GetComponent<Scr_ActionAnimation> ().vAnimationState = "StartActing";
 				if (tMX < tWX)
 					Object_Warrior.GetComponent<Scr_ActionAnimation> ().vInputType = "PushUp";
 				if (tMX > tWX)
 					Object_Warrior.GetComponent<Scr_ActionAnimation> ().vInputType = "PushDown";
 			} else {
-				Object_Warrior.GetComponent<Scr_ActionAnimation> ().vAnimationState = "StartMoving";
+				Object_Warrior.GetComponent<Scr_ActionAnimation> ().vAnimationState = "StartActing";
 				if (tMZ < tWZ)
 					Object_Warrior.GetComponent<Scr_ActionAnimation> ().vInputType = "PushRight";
 				if (tMZ > tWZ)
@@ -256,25 +254,24 @@ public class Scr_Global : MonoBehaviour {
 			tWZ = Object_Warrior.transform.position.z;
 
 			if (Vector2.Distance(new Vector2(tOX,tOZ),new Vector2(tWX,tWZ))<2f){
-				Object_Orc.GetComponent<Scr_ActionAnimation> ().vAnimationState = "StartMoving";
+				Object_Orc.GetComponent<Scr_ActionAnimation> ().vAnimationState = "StartActing";
 				Object_Warrior.GetComponent<Scr_SFX_Damage_Blinker> ().vBlinkFrame = .01f;
-				Object_Orc.GetComponent<Scr_ActionAnimation> ().vInputType = "Wait";}
+				Object_Orc.GetComponent<Scr_ActionAnimation> ().vInputType = "BasicAttacck";}
 			else
 			if ((tOX-tWX)*Mathf.Sign(tOX-tWX) > (tOZ-tWZ)*Mathf.Sign(tOZ-tWZ)) {
-				Object_Orc.GetComponent<Scr_ActionAnimation> ().vAnimationState = "StartMoving";
+				Object_Orc.GetComponent<Scr_ActionAnimation> ().vAnimationState = "StartActing";
 				if (tOX < tWX)
 					Object_Orc.GetComponent<Scr_ActionAnimation> ().vInputType = "MoveUp";
 				if (tOX > tWX)
 					Object_Orc.GetComponent<Scr_ActionAnimation> ().vInputType = "MoveDown";
 			} else {
-				Object_Orc.GetComponent<Scr_ActionAnimation> ().vAnimationState = "StartMoving";
+				Object_Orc.GetComponent<Scr_ActionAnimation> ().vAnimationState = "StartActing";
 				if (tOZ < tWZ)
 					Object_Orc.GetComponent<Scr_ActionAnimation> ().vInputType = "MoveRight";
 				if (tOZ > tWZ)
 					Object_Orc.GetComponent<Scr_ActionAnimation> ().vInputType = "MoveLeft";
 			}
 			CurrentTurn = "Player";
-			TurnCoolDown = 30.0f;
 			Global_AnimationState = "StartAnimate";
 		}
 	}
@@ -300,7 +297,11 @@ public class Scr_Global : MonoBehaviour {
 		tThose = GameObject.FindGameObjectsWithTag ("AnimationObject");
 		foreach (GameObject tThat in tThose) {
 			tEveryoneisIdle = false;
-			}
+		}
+		vTextC.GetComponent<Text> ().text = tEveryoneisIdle.ToString();
 		return tEveryoneisIdle;
 	}
+
+
+
 }
