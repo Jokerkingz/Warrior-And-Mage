@@ -31,6 +31,7 @@ public class UImanager : MonoBehaviour {
 	public Slider healthBar;
 	public Slider specBar;
 	public Slider expBar;
+	public Text levelTxt;
 
 	//Characters
 	[Header("Characters References")]
@@ -98,6 +99,7 @@ public class UImanager : MonoBehaviour {
 		//EXPERIENCE BAR
 		expBar.maxValue =sm.maxExp;
 		expBar.value = sm.curExp;
+		levelTxt.text = "LEVEL " + sm.curLvl;
 	}
 		
 }
