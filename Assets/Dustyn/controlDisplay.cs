@@ -17,11 +17,13 @@ public class controlDisplay : MonoBehaviour {
 	public float startPos;
 	public float endPos;
 
+	private Animator anim;
 	//public string UIstatus;
 	//public float slideFrame;
 	//public float gotoX;
 
 	void Start () {
+		anim = gameObject.GetComponent<Animator> ();
 		cg = this.gameObject.GetComponent<CanvasGroup> ();
 		active = true;
 		canPress = true;
@@ -58,10 +60,15 @@ public class controlDisplay : MonoBehaviour {
 		if (active == true) {
 			cg.alpha = alpha += changeRate * Time.deltaTime;
 			//transform.localPosition = new Vector3.Lerp (startPos, -11f, 0f);
+			anim.SetBool("SlideIn", true);
+			anim.SetBool("SlideOut", false);
 		}
 		if (active == false) {
 			cg.alpha = alpha -= changeRate * Time.deltaTime;
 			//transform.localPosition = new Vector3.Lerp (endPos, -11f, 0f);
+			//gameObject.GetComponent<Animation>().Play("wcslideout");
+			anim.SetBool("SlideIn", false);
+			anim.SetBool("SlideOut", true);	
 		}
 
 
