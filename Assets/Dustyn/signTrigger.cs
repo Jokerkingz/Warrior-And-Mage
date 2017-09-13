@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class signPost : MonoBehaviour {
+public class signTrigger : MonoBehaviour {
 
 	[Header("Floats")]
 	public float distanceWar;
@@ -16,7 +16,10 @@ public class signPost : MonoBehaviour {
 	public GameObject sign;
 
 	void Start()
-	{}
+	{
+		warrior = GameObject.FindGameObjectWithTag ("Warrior");
+		mage = GameObject.FindGameObjectWithTag ("Mage");
+	}
 
 	void Update()
 	{
@@ -25,6 +28,8 @@ public class signPost : MonoBehaviour {
 
 		if (distanceWar >= range) {
 			//Debug.Log ("cannot read");
+			sign.SendMessage("Disappear");
+
 		}
 
 		if (distanceWar <= range) {
@@ -34,6 +39,7 @@ public class signPost : MonoBehaviour {
 
 		if (distanceMag>= range) {
 			//Debug.Log ("cannot read");
+			sign.SendMessage("Disappear");
 		}
 
 		if (distanceMag <= range) {
