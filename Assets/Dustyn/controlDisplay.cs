@@ -27,7 +27,7 @@ public class controlDisplay : MonoBehaviour {
 		cg = this.gameObject.GetComponent<CanvasGroup> ();
 		active = true;
 		canPress = true;
-		transform.localPosition = new Vector3 (startPos, -11, 0);
+		//transform.localPosition = new Vector3 (startPos, -11, 0);
 		//UIstatus = "controls";
 	
 	}
