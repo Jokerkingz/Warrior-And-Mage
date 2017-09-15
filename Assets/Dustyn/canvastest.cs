@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class canvastest : MonoBehaviour {
 
+	//In World UI faces camera
+
 	public Transform target;
 
 	void Start () {
-		
 	}
 
 	void Update () {

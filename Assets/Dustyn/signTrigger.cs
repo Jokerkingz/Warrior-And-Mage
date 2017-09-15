@@ -27,24 +27,26 @@ public class signTrigger : MonoBehaviour {
 		distanceMag = Vector3.Distance (transform.position, mage.transform.position);
 
 		if (distanceWar >= range) {
-			//Debug.Log ("cannot read");
 			sign.SendMessage("Disappear");
+			if (distanceMag <= range) {
+				sign.SendMessage ("Appear");
+			}
 
 		}
 
 		if (distanceWar <= range) {
 			sign.SendMessage ("Appear");
-			//Debug.Log("Can Read!!");
 		}
 
 		if (distanceMag>= range) {
-			//Debug.Log ("cannot read");
 			sign.SendMessage("Disappear");
+			if (distanceWar <= range) {
+				sign.SendMessage ("Appear");
+			}
 		}
 
 		if (distanceMag <= range) {
 			sign.SendMessage ("Appear");
-			//Debug.Log("Can Read!!");
 		}
 	}
 }
