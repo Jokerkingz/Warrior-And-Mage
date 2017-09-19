@@ -13,10 +13,13 @@ public class statManager : MonoBehaviour {
 	public int maxSpec;
 	public int curSpec;
 
-	public int maxExp;
-	public int curExp;
-	public int maxLvl;
+	[Header("Leveling")]
+
 	public int curLvl;
+	public int curExp;
+	public int nextLvl;
+	public int[] toLevelUp;
+
 
 	[Header("KeyCodes for testing")]
 	public KeyCode DrainHealth;
@@ -37,13 +40,13 @@ public class statManager : MonoBehaviour {
 		curHealth = maxHealth;
 		curSpec = maxSpec;
 		curExp = 0;
+	
 	}
 	
 
 	void Update () {
 
-
-
+	
 		// FOR TESTING PURPOSES
 
 		if (Input.GetKeyDown (DrainHealth)) {
@@ -68,10 +71,15 @@ public class statManager : MonoBehaviour {
 			expBar.SendMessage ("Appear");
 		}
 
+		if (curExp >= toLevelUp [curLvl]) {
+			curLvl++;
+			lvlTxt.SendMessage ("Appear");
+		}
+
 		Stats ();
 	}
 
-	void Stats()
+	void Stats ()
 	{
 		if (curHealth <= 0) {
 			curHealth = 0;
@@ -79,26 +87,15 @@ public class statManager : MonoBehaviour {
 		if (curHealth > maxHealth) {
 			curHealth = maxHealth;
 
-		}if (curSpec <= 0) {
+		}
+		if (curSpec <= 0) {
 			curSpec = 0;
 		}
 		if (curSpec > maxSpec) {
 			curSpec = maxSpec;
 		}
 			
-		if (curExp >= maxExp) {
-			lvlTxt.SendMessage ("Appear");
-			curLvl += 1;
-			curExp = 0;
-			maxExp *= 2;
-			maxHealth += 50;
-			maxSpec +=50;
-			curHealth += 50;
-			curSpec += 50;
-		}
+		nextLvl= toLevelUp[curLvl];
 
-		if (curLvl >= maxLvl) {
-			curLvl = maxLvl;
-		}
-}
+	}
 }
