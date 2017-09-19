@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Scr_ActionAnimation : MonoBehaviour {
+public class Scr_ProtagonistAction : MonoBehaviour {
 	public Vector3 vPrevVect3;
 	public Vector3 vNextVect3;
 	public string vAnimationState;
@@ -11,6 +11,12 @@ public class Scr_ActionAnimation : MonoBehaviour {
 	public AnimationCurve vBounce;
 	public Scr_Global vGlobal; 
 	public string vDirection;
+
+	public Scr_TargetingSystem cTS;
+	public float vLookDirection; // Direction of the amibo after doing an action;
+
+
+
 	// Use this for initialization
 	void Start () {
 		vAnimationState = "Idle";
@@ -18,8 +24,9 @@ public class Scr_ActionAnimation : MonoBehaviour {
 		vNextVect3 = this.transform.position;
 		vAnimationFrame = 0;
 		vGlobal = GameObject.FindGameObjectWithTag ("GameController").GetComponent<Scr_Global> ();
+		cTS = this.GetComponent<Scr_TargetingSystem>();
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		switch (vAnimationState) {
@@ -78,7 +85,7 @@ public class Scr_ActionAnimation : MonoBehaviour {
 		case "Move":
 			//vAnimationFrame += .05f // is correct
 			vAnimationFrame = vGlobal.Global_AnimationFrame;
-			if (vGlobal.Global_AnimationState == "EndAnimate") {
+			if (vGlobal.vCurrentTurnState == "PlayerEndAnimate") {
 				vAnimationFrame = 0f;
 				vAnimationState = "Idle";
 				vInputType = "Wait";
@@ -131,7 +138,7 @@ public class Scr_ActionAnimation : MonoBehaviour {
 				}
 			}
 	}
-	void AttackEnemy(){
+	//void AttackEnemy(){
 		/* Generate a swipe in a given spot
 		if (GameObject.FindGameObjectsWithTag ("Enemy").Length > 0) {
 			float tOX = Object_Orc.transform.position.x,
@@ -145,7 +152,31 @@ public class Scr_ActionAnimation : MonoBehaviour {
 			Object_Warrior.GetComponent<Scr_ActionAnimation> ().vInputType = "Wait";
 		}
 		*/
+	//}
+
+	void AttackEnemy(){
+		if (cTS.vCurrentTarget != null) {
+			vLookDirection = Vector2.Angle(new Vector2(this.transform.position.x,this.transform.position.z),new Vector2(cTS.transform.position.x,cTS.transform.position.z));
+			if (Vector3.Distance (this.transform.position, cTS.transform.position) < 2f) {
+				Debug.Log ("I Attacked " + cTS.vCurrentTarget.name);
+				cTS.vCurrentTarget.GetComponent<Scr_SFX_Damage_Blinker> ().vBlinkFrame += .01f;
+			}
+		}
+
+		/*
+		if (GameObject.FindGameObjectsWithTag ("Enemy").Length > 0) {
+			float tOX = Object_Orc.transform.position.x,
+			tWX = Object_Warrior.transform.position.x,
+			tOZ = Object_Orc.transform.position.z,
+			tWZ = Object_Warrior.transform.position.z;
+			if (Vector2.Distance (new Vector2 (tOX, tOZ), new Vector2 (tWX, tWZ)) < 2f) {
+				Object_Orc.GetComponent<Scr_SFX_Damage_Blinker> ().vBlinkFrame = .01f;
+			}
+			Object_Warrior.GetComponent<Scr_ActionAnimation> ().vAnimationState = "StartActing";
+			Object_Warrior.GetComponent<Scr_ActionAnimation> ().vInputType = "Wait";
+		}'*/
 	}
+
 	Vector3 DirectionToPoint(string tDirection,int tMultiplier){
 		Vector3 tResult;
 		switch (tDirection) {

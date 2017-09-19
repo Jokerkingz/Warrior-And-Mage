@@ -7,31 +7,86 @@ public class Scr_TargetingSystem : MonoBehaviour {
 	public GameObject vTargetedObject; // The Target
 	public GameObject vPreFab;
 	public GameObject vTarget; // The object used to target
-	public GameObject vOwner;
+	public float  vFarthestDistance = 10f;
 	public string vTargetStatus;
 	public List<GameObject> myTargets;
 	public LayerMask vRayLayers;
 
-	public GameObject vCurrentTarget;
 
-
+	public string vEnemiesToTarget = "Protagonist";
+	public GameObject vCurrentTarget = null;
+	private float vSpinAngle;
+	private Scr_Global gGlobal;
 	// Use this for initialization
 	void Start () {
-		vTarget = Instantiate (vPreFab)as GameObject;
-		//Dictionary<GameObject,Vector3> dTargets = new Dictionary<GameObject, Vector3> ();
+		if (vEnemiesToTarget == "Antagonist") 
+			vTarget = Instantiate (vPreFab)as GameObject;
+		gGlobal = GameObject.FindGameObjectWithTag ("GameController").GetComponent<Scr_Global>();
+
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		vCurrentTarget = NearestTarget ();
-		FindATarget ("Antagonist");
-		//Ray rRay; Proper Raycasting
-		//Vector3 tAngle = vTarget.transform.position - this.transform.position;
-		//	rRay = new Ray(this.transform.position, tAngle);
-		//Debug.DrawRay (this.transform.position, tAngle);
-		vTargetStatus = "poop";
+	public void AfterMove() {
+		RecheckForTargets ();
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			NextTarget ();
+			Debug.Log ("Next Plez");
+			//vTarget
+		}
+		if (vEnemiesToTarget == "Antagonist") {
+			switch (this.tag) {
+			case "Warrior":
+				vSpinAngle = gGlobal.Global_WarriorIconRotation;
+				break;
+			case "Mage":
+				vSpinAngle = gGlobal.Global_MageIconRotationt;
+				break;
+			}
+			if (vCurrentTarget != null) {
+				vTarget.transform.position = Vector3.Scale (vCurrentTarget.transform.position, new Vector3 (1f, 2f, 1f));
+			}
+			vTarget.transform.eulerAngles = new Vector3 (0f, vSpinAngle, 0f);
+		}
 	}
-	GameObject NearestTarget(){
+	public void NextTarget (){
+		if (vCurrentTarget == null)
+		return;
+		int tIndex = 0; // CurrentIndex of the list
+		int tFoundIndex = 0; // found Index of list
+		string tOldTarget = vCurrentTarget.name;
+		GameObject tNextTarget = null;
+		foreach (GameObject That in myTargets) { // checking
+			if (That.name == tOldTarget) {
+				tFoundIndex = tIndex;
+			}
+			tIndex += 1;
+		}
+		tFoundIndex = (tFoundIndex + 1) % tIndex;
+		tNextTarget = myTargets [tFoundIndex].gameObject;
+		vCurrentTarget = tNextTarget;
+
+
+	}
+	void RecheckForTargets(){
+		if (vCurrentTarget != null) {
+			string tOldTarget = vCurrentTarget.name;
+			GameObject NewTarget = null;
+			bool tIFoundHim = false;
+			FindATarget (vEnemiesToTarget);
+			foreach (GameObject That in myTargets) { // checking
+				if (That.name == tOldTarget) {
+					tIFoundHim = true;
+					NewTarget = That.gameObject;
+				}
+			}
+			if (!tIFoundHim)
+				vCurrentTarget = NearestTarget ();
+		} else {
+			FindATarget (vEnemiesToTarget);
+			vCurrentTarget = NearestTarget ();
+		}
+	}
+	public GameObject NearestTarget(){
 		float tClosestDistance = 20f;
 		float tDistance;
 		GameObject tClosestOne = null;
@@ -41,10 +96,7 @@ public class Scr_TargetingSystem : MonoBehaviour {
 				tClosestOne = That;
 				tClosestDistance = tDistance;
 				}
-				
-
 		}
-
 		return tClosestOne;
 	}
 
@@ -55,18 +107,39 @@ public class Scr_TargetingSystem : MonoBehaviour {
 		Vector3 tTargetSpot;
 		float tDistance;
 		myTargets.Clear ();
-		//Debug.
+
 		switch (tTargetType) {
 		case "Protagonist":
-
-
+			GameObject tWarrior = GameObject.FindGameObjectWithTag ("Warrior");
+			tTargetSpot = tWarrior.transform.position;
+			tDistance = Vector3.Distance (this.transform.position, tTargetSpot);
+			if (tDistance < vFarthestDistance) {
+				tAngle = tTargetSpot - this.transform.position;
+				rRay = new Ray (tOwner.transform.position, tAngle);
+				if (!Physics.Raycast (rRay, tDistance, vRayLayers)) {
+					Debug.DrawRay (tOwner.transform.position, tAngle, Color.green);
+					myTargets.Add (tWarrior.gameObject);
+					}
+				}
+			GameObject tMage = GameObject.FindGameObjectWithTag ("Mage");
+			tTargetSpot = tMage.transform.position;
+			tDistance = Vector3.Distance (this.transform.position, tTargetSpot);
+			if (tDistance < vFarthestDistance) {
+				tAngle = tTargetSpot - this.transform.position;
+				rRay = new Ray (tOwner.transform.position, tAngle);
+				if (!Physics.Raycast (rRay, tDistance, vRayLayers)) {
+					Debug.DrawRay (tOwner.transform.position, tAngle, Color.green);
+					myTargets.Add (tMage.gameObject);
+					}
+				}
+			vCurrentTarget = NearestTarget();
 			break;
 		case "Antagonist":
 			GameObject[] Those = GameObject.FindGameObjectsWithTag ("Enemy");
 			foreach (GameObject That in Those) {
 				tTargetSpot = That.transform.position;
 				tDistance = Vector3.Distance (this.transform.position, tTargetSpot);
-				if (tDistance < 10f) {
+				if (tDistance < vFarthestDistance) {
 					tAngle = tTargetSpot - this.transform.position;
 					rRay = new Ray (tOwner.transform.position, tAngle);
 					if (!Physics.Raycast (rRay, tDistance, vRayLayers)) {
@@ -75,19 +148,13 @@ public class Scr_TargetingSystem : MonoBehaviour {
 					}
 					else
 						Debug.DrawRay (tOwner.transform.position, tAngle,Color.red);
-					
-
 				} else {
 					tAngle = tTargetSpot - this.transform.position;
 					rRay = new Ray (tOwner.transform.position, tAngle);
 					Debug.DrawRay (tOwner.transform.position, tAngle,Color.gray);
-
 				}
-					
 			}
 			break;
-
 		}
-
 	}
 }
