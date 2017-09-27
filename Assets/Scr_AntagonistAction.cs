@@ -51,22 +51,39 @@ public class Scr_AntagonistAction : MonoBehaviour {
 				vDirection = "East";
 				vNextVect3 = transform.position + DirectionToPoint(vDirection,1);
 				break;
-			case "PushUp":
+			case "PushN":
 				vDirection = "North";
 				vNextVect3 = transform.position + DirectionToPoint(vDirection,3);
 				break;
-			case "PushDown":
+			case "PushS":
 				vDirection = "South";
 				vNextVect3 = transform.position + DirectionToPoint(vDirection,3);
 				break;
-			case "PushLeft":
+			case "PushW":
 				vDirection = "West";
 				vNextVect3 = transform.position + DirectionToPoint(vDirection,3);
 				break;
-			case "PushRight":
+			case "PushE":
 				vDirection = "East";
 				vNextVect3 = transform.position + DirectionToPoint(vDirection,3);
 				break;
+			case "PushNE":
+				vDirection = "NorthEast";
+				vNextVect3 = transform.position + DirectionToPoint(vDirection,1);
+				break;
+			case "PushSE":
+				vDirection = "SouthEast";
+				vNextVect3 = transform.position + DirectionToPoint(vDirection,1);
+				break;
+			case "PushSW":
+				vDirection = "SouthWest";
+				vNextVect3 = transform.position + DirectionToPoint(vDirection,1);
+				break;
+			case "PushNW":
+				vDirection = "NorthWest";
+				vNextVect3 = transform.position + DirectionToPoint(vDirection,1);
+				break;
+
 			case "BasicAttack":
 				vNextVect3 = transform.position;
 				AttackEnemy ();
@@ -191,6 +208,18 @@ public class Scr_AntagonistAction : MonoBehaviour {
 			break;
 		case "West":
 			tResult = (new Vector3 (0f, 0f, -1f) * tMultiplier);
+			break;
+		case "NorthEast":
+			tResult = (new Vector3 (-1f, 0f, 1f) * tMultiplier);
+			break;
+		case "SouthEast":
+			tResult = (new Vector3 (1f, 0f, 1f) * tMultiplier);
+			break;
+		case "SouthWest":
+			tResult = (new Vector3 (1f, 0f, -1f) * tMultiplier);
+			break;
+		case "NorthWest":
+			tResult = (new Vector3 (-1f, 0f, -1f) * tMultiplier);
 			break;
 		default:
 			tResult = (new Vector3 (0f, 0f, -1f) * tMultiplier);

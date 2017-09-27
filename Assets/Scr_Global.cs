@@ -47,9 +47,6 @@ public class Scr_Global : MonoBehaviour {
 	public float Global_WarriorIconRotation = 0f;
 	public float Global_MageIconRotationt   = 180f;
 
-	public GameObject vTextA;
-	public GameObject vTextB;
-	public GameObject vTextC;
 
 	public bool vDebugIsEveryoneIdle;
 
@@ -83,8 +80,12 @@ public class Scr_Global : MonoBehaviour {
 		///
 		switch (vCurrentTurnState){
 			case "PlayerInputWait":
+				Those = GameObject.FindGameObjectsWithTag ("PlaceHolders");
+					foreach (GameObject That in Those) {
+						Destroy(That);
+						}
 				Object_Warrior.GetComponent<Scr_TargetingSystem>().AfterMove();
-			Object_Mage.GetComponent<Scr_TargetingSystem>().AfterMove();
+				Object_Mage.GetComponent<Scr_TargetingSystem>().AfterMove();
 				if (Is_Everyone_Idle())
 					InputCheck ();
 			break;
@@ -109,7 +110,11 @@ public class Scr_Global : MonoBehaviour {
 				else
 					vCurrentTurnState = "AIStart";
 			break;
-			case "AIStart":
+		case "AIStart":
+				Those = GameObject.FindGameObjectsWithTag ("PlaceHolders");
+					foreach (GameObject That in Those) {
+						Destroy(That);
+						}
 				Those = GameObject.FindGameObjectsWithTag ("Enemy");
 					foreach (GameObject That in Those) {
 						That.GetComponent<Scr_TargetingSystem>().AfterMove();
@@ -140,65 +145,19 @@ public class Scr_Global : MonoBehaviour {
 				
 
 			break;
+			case "Options":
+				
+
+			break;
 			case "Scene":
 				
 
 			break;
 			}
-		/// Debug Teest
-		/*
-		if (Input.GetButton ("WarriorItem"))
-			Debug.Log ("Pressing Warrior Item");
-
-
-		switch (Global_AnimationState) {
-			case "StartAnimate":
-				Global_AnimationFrame = 0f;
-				Global_AnimationState = "Animate";
-				break;
-			case "Animate":
-				Global_AnimationFrame += 0.05f;
-				if (Global_AnimationFrame >= 1f) {
-					Global_AnimationFrame = 1f;
-					Global_AnimationState = "EndAnimate";
-					if (vNextTurn == "AI") {
-						CurrentTurn = "AI";
-						GameObject[] Those;
-						Those = GameObject.FindGameObjectsWithTag ("Enemy");
-						foreach (GameObject That in Those) {
-							That.GetComponent<Scr_AIControl> ().vStatus = "MyTurn"; }
-						vNextTurn = "Player";
-						}
-					}
-				break;
-			case "EndAnimate":
-				Global_AnimationFrame = 1f;
-				break;
-			}
-
-		if (Global_AnimationState == "EndAnimate" && Is_Everyone_Idle())
-			switch (CurrentTurn) {
-				case "Player":
-					InputCheck ();
-					break;
-				case "AI":
-					if (GameObject.FindGameObjectsWithTag ("Enemy").Length <= 0)
-				
-					//	ControlAI ();
-					//else
-					//	Global_AnimationState = "Wait For It";
-						CurrentTurn = "Player";
-					break;
-			}
-			*/
 	}
 	void InputCheck(){
 		string WarriorOrder = WarriorInput();
 		string MageOrder = MageInput();
-		vTextA.GetComponent<Text> ().text = WarriorOrder;
-		vTextB.GetComponent<Text> ().text = MageOrder;
-		//if (Input.GetKey(KeyCode.Space))
-		//	Debug.Log("Warrior " + WarriorOrder + " Mage " + MageOrder);
 
 		if (WarriorOrder != "None" && MageOrder != "None") { // Both have an action
 
@@ -241,7 +200,7 @@ public class Scr_Global : MonoBehaviour {
 			if (Input.GetAxis ("WarriorSkill3") > 0f || Input.GetButton ("WarriorSkill3")) {
 				Order = SkillList[3];
 			}
-			if (Input.GetAxis ("WaitTrigger") > 0f || Input.GetButton ("WarriorWait"))
+			if (Input.GetAxis ("WarriorWait") > 0f || Input.GetButton ("WarriorWait"))
 				Order = "Wait";
 		} else {
 			if (Input.GetAxis ("WarriorAttack") < 0f || Input.GetButton ("WarriorAttack")) {
@@ -283,49 +242,14 @@ public class Scr_Global : MonoBehaviour {
 			if (Input.GetButton ("MageSkill3")) {
 				Order = SkillList[7];
 			}
-			if (Input.GetAxis ("WaitTrigger") < 0f || Input.GetButton ("MageWait"))
+			if (Input.GetAxis ("MageWait") > 0f || Input.GetButton ("MageWait"))
 				Order = "Wait";
 		}
 		return Order;
 	}
 
-	void BreakWall(){
-		if (GameObject.FindGameObjectsWithTag ("Breakable").Length > 0) {
-			GameObject tWall = GameObject.FindGameObjectWithTag ("Breakable");
-			float tOX = tWall.transform.position.x,
-			tWX = Object_Warrior.transform.position.x,
-			tOZ = tWall.transform.position.z,
-			tWZ = Object_Warrior.transform.position.z;
-			if (Vector2.Distance (new Vector2 (tOX, tOZ), new Vector2 (tWX, tWZ)) < 2f) {
-				cWPA.vAnimationState = "StartActing";
-				Destroy (tWall.gameObject);
-				cWPA.vInputType = "Wait";
-			}
-		}
-	}
-	void PushSpell(){
-		float tMX = Object_Mage.transform.position.x,
-		tWX = Object_Warrior.transform.position.x,
-		tMZ = Object_Mage.transform.position.z,
-		tWZ = Object_Warrior.transform.position.z;
-		cMPA.vAnimationState = "StartActing";
-		cMPA.vInputType = "Wait";
-		if (Vector2.Distance(new Vector2(tMX,tMZ),new Vector2(tWX,tWZ))<1.1f){
-			if ((tMX-tWX)*Mathf.Sign(tMX-tWX) > (tMZ-tWZ)*Mathf.Sign(tMZ-tWZ)) {
-				cWPA.vAnimationState = "StartActing";
-				if (tMX < tWX)
-					cWPA.vInputType = "PushUp";
-				if (tMX > tWX)
-					cWPA.vInputType = "PushDown";
-			} else {
-				cWPA.vAnimationState = "StartActing";
-				if (tMZ < tWZ)
-					cWPA.vInputType = "PushRight";
-				if (tMZ > tWZ)
-					cWPA.vInputType = "PushLeft";
-			}
-		}
-	}
+
+
 
 	bool Is_Everyone_Idle(){
 		bool tEveryoneisIdle = true;
@@ -349,11 +273,7 @@ public class Scr_Global : MonoBehaviour {
 		foreach (GameObject tThat in tThose) {
 			tEveryoneisIdle = false;
 		}
-		vTextC.GetComponent<Text> ().text = tEveryoneisIdle.ToString();
 		vDebugIsEveryoneIdle = tEveryoneisIdle;
 		return tEveryoneisIdle;
 	}
-
-
-
 }

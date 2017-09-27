@@ -18,9 +18,12 @@ public class Scr_AIControl : MonoBehaviour {
 
 	public string results;
 	public string tWhatIsOnHere;
+	public GameObject vPlaceHolder;
 
 	private GameObject vObjWarrior;
 	private GameObject vObjMage;
+
+	private Vector3 vChaseSpot;
 	// Use this for initialization
 	void Start () {
 		vStatus = "Idle";
@@ -67,37 +70,7 @@ public class Scr_AIControl : MonoBehaviour {
 			Debug.Log ("MoveAction "+ tTemp);
 			MoveAction (tTemp);
 		}
-		}
-		//if (TurnCoolDown <= 0f)
-		/*
-		{	//vTarget
-			float tOX = Object_Orc.transform.position.x,
-			tWX = Object_Warrior.transform.position.x,
-			tOZ = Object_Orc.transform.position.z,
-			tWZ = Object_Warrior.transform.position.z;
-
-			if (Vector2.Distance(new Vector2(tOX,tOZ),new Vector2(tWX,tWZ))<2f){
-				Object_Orc.GetComponent<Scr_ActionAnimation> ().vAnimationState = "StartActing";
-				Object_Warrior.GetComponent<Scr_SFX_Damage_Blinker> ().vBlinkFrame = .01f;
-				Object_Orc.GetComponent<Scr_ActionAnimation> ().vInputType = "BasicAttacck";}
-			else
-				if ((tOX-tWX)*Mathf.Sign(tOX-tWX) > (tOZ-tWZ)*Mathf.Sign(tOZ-tWZ)) {
-					Object_Orc.GetComponent<Scr_ActionAnimation> ().vAnimationState = "StartActing";
-					if (tOX < tWX)
-						Object_Orc.GetComponent<Scr_ActionAnimation> ().vInputType = "MoveUp";
-					if (tOX > tWX)
-						Object_Orc.GetComponent<Scr_ActionAnimation> ().vInputType = "MoveDown";
-				} else {
-					Object_Orc.GetComponent<Scr_ActionAnimation> ().vAnimationState = "StartActing";
-					if (tOZ < tWZ)
-						Object_Orc.GetComponent<Scr_ActionAnimation> ().vInputType = "MoveRight";
-					if (tOZ > tWZ)
-						Object_Orc.GetComponent<Scr_ActionAnimation> ().vInputType = "MoveLeft";
-				}
-			CurrentTurn = "Player";
-			Global_AnimationState = "StartAnimate";
-
-	*/ //	}
+	}
 
 
 	void AttackSomeone(){
@@ -143,53 +116,65 @@ public class Scr_AIControl : MonoBehaviour {
 		char tResult = tDirection;
 		Ray tRay;
 		Vector3 tMySpot = this.transform.position;
+		tMySpot.y += 1f;
+
+		if (cTS.vCurrentTarget != null)
+			vChaseSpot = cTS.vCurrentTarget.transform.position;
 		switch (tDirection) {
 		case 'N':
-			tRay = new Ray (tMySpot, Vector3.left);
-			if (!Physics.Raycast (tRay, 1f, vWallLayer))
-				tResult = 'N';
-			else {if (tMySpot.z > this.transform.position.z)
+			tMySpot.x -= 1f;
+			tMySpot.y += 2f;
+			tRay = new Ray (tMySpot,  new Vector3(0f,-5f,0f));
+			if (!Physics.Raycast (tRay, 5f, vWallLayer)){
+				tResult = 'N';}
+			else {if (tMySpot.z < vChaseSpot.z)
 					tResult = 'E';
-				else if (tMySpot.z < this.transform.position.z)
+			else if (tMySpot.z > vChaseSpot.z)
 						tResult = 'W';
 					else
 						tResult = 'X';
 				}
 			break;
 		case 'E':
-			tRay = new Ray (tMySpot, Vector3.forward);
-			if (!Physics.Raycast (tRay, 1f, vWallLayer))
-				tResult = 'E';
+			tMySpot.z += 1f;
+			tMySpot.y += 2f;
+			tRay = new Ray (tMySpot,  new Vector3(0f,-5f,0f));
+			if (!Physics.Raycast (tRay, 5f, vWallLayer)){
+				tResult = 'E';}
 			else {
-				if (tMySpot.x > this.transform.position.x)
+				if (tMySpot.x < vChaseSpot.x)
 					tResult = 'S';
-				else if (tMySpot.x < this.transform.position.x)
+				else if (tMySpot.x > vChaseSpot.x)
 					tResult = 'N';
 				else
 					tResult = 'X';
 			}
 			break;
-			case 'S':
-				tRay = new Ray (tMySpot, Vector3.right);
-				if (!Physics.Raycast (tRay, 1f, vWallLayer))
-					tResult = 'S';
+		case 'S':
+			tMySpot.x += 1f;
+			tMySpot.y += 2f;
+			tRay = new Ray (tMySpot,  new Vector3(0f,-5f,0f));
+			if (!Physics.Raycast (tRay, 5f, vWallLayer)){
+					tResult = 'S';}
 				else {
-					if (tMySpot.z > this.transform.position.z)
+				if (tMySpot.z < vChaseSpot.z)
 						tResult = 'E';
-					else if (tMySpot.z < this.transform.position.z)
+				else if (tMySpot.z > vChaseSpot.z)
 						tResult = 'W';
 					else
 						tResult = 'X';
 				}
 				break;
-			case 'W':
-				tRay = new Ray (tMySpot, Vector3.back);
-				if (!Physics.Raycast (tRay, 1f, vWallLayer))
-					tResult = 'W';
+		case 'W':
+			tMySpot.z -= 1f;
+			tMySpot.y += 2f;
+			tRay = new Ray (tMySpot,  new Vector3(0f,-5f,0f));
+			if (!Physics.Raycast (tRay, 5f, vWallLayer)){
+					tResult = 'W';}
 				else {
-					if (tMySpot.x > this.transform.position.x)
+				if (tMySpot.x < vChaseSpot.x)
 						tResult = 'S';
-					else if (tMySpot.x < this.transform.position.x)
+				else if (tMySpot.x > vChaseSpot.x)
 						tResult = 'N';
 					else
 						tResult = 'X';
@@ -199,23 +184,50 @@ public class Scr_AIControl : MonoBehaviour {
 		}
 
 		cAA.vAnimationState = "StartActing";
+		tMySpot = this.transform.position;
 		switch (tResult) {
 		case 'N':
-			cAA.vInputType = "MoveUp";
+			tMySpot.x -= 1f;
+			tMySpot.y += 2f;
+			tRay = new Ray (tMySpot,  new Vector3(0f,-5f,0f));
+			if (Physics.Raycast (tRay, 5f, vWallLayer))
+				cAA.vInputType = "Wait";
+			else
+				cAA.vInputType = "MoveUp";
 			break;
 		case 'E':
-			cAA.vInputType = "MoveRight";
+			tMySpot.z += 1f;
+			tMySpot.y += 2f;
+			tRay = new Ray (tMySpot,  new Vector3(0f,-5f,0f));
+			if (Physics.Raycast (tRay, 5f, vWallLayer))
+				cAA.vInputType = "Wait";
+			else
+				cAA.vInputType = "MoveRight";
 			break;
 		case 'S':
-			cAA.vInputType = "MoveDown";
+			tMySpot.x += 1f;
+			tMySpot.y += 2f;
+			tRay = new Ray (tMySpot,  new Vector3(0f,-5f,0f));
+			if (Physics.Raycast (tRay, 5f, vWallLayer))
+				cAA.vInputType = "Wait";
+			else
+				cAA.vInputType = "MoveDown";
 			break;
 		case 'W':
-			cAA.vInputType = "MoveLeft";
+			tMySpot.z -= 1f;
+			tMySpot.y += 2f;
+			tRay = new Ray (tMySpot,  new Vector3(0f,-5f,0f));
+			if (Physics.Raycast (tRay, 5f, vWallLayer))
+				cAA.vInputType = "Wait";
+			else
+				cAA.vInputType = "MoveLeft";
 			break;
 		default:
 			cAA.vInputType = "Wait";
 			break;
 		}
+		tMySpot.y = 1f;
+		Instantiate(vPlaceHolder,tMySpot,Quaternion.Euler(Vector3.zero));
 	}
 
 	void MoveAction (char tToWhichDirection){
@@ -224,36 +236,46 @@ public class Scr_AIControl : MonoBehaviour {
 		cAA.vAnimationState = "StartActing";
 		switch (tToWhichDirection) {
 		case 'N':
-			tRay = new Ray (tMySpot, Vector3.left);
-			if (Physics.Raycast (tRay, 1f, vWallLayer))
+			tMySpot.x -= 1f;
+			tMySpot.y += 2f;
+			tRay = new Ray (tMySpot,  new Vector3(0f,-5f,0f));
+			if (Physics.Raycast (tRay, 5f, vWallLayer))
 				cAA.vInputType = "Wait";
 			else
 			cAA.vInputType = "MoveUp";
 			break;
 		case 'E':
-			tRay = new Ray (tMySpot, Vector3.forward);
-			if (Physics.Raycast (tRay, 1f, vWallLayer))
+		tMySpot.z += 1f;
+			tMySpot.y += 2f;
+			tRay = new Ray (tMySpot,  new Vector3(0f,-5f,0f));
+			if (Physics.Raycast (tRay, 5f, vWallLayer))
 				cAA.vInputType = "Wait";
 			else
-			cAA.vInputType = "MoveRight";
+				cAA.vInputType = "MoveRight";
 			break;
 		case 'S':
-			tRay = new Ray (tMySpot, Vector3.right);
-			if (Physics.Raycast (tRay, 1f, vWallLayer))
+			tMySpot.x += 1f;
+			tMySpot.y += 2f;
+			tRay = new Ray (tMySpot,  new Vector3(0f,-5f,0f));
+			if (Physics.Raycast (tRay, 5f, vWallLayer))
 				cAA.vInputType = "Wait";
 			else
-			cAA.vInputType = "MoveDown";
+				cAA.vInputType = "MoveDown";
 			break;
 		case 'W':
-			tRay = new Ray (tMySpot, Vector3.back);
-			if (Physics.Raycast (tRay, 1f, vWallLayer))
+			tMySpot.z -= 1f;
+			tMySpot.y += 2f;
+			tRay = new Ray (tMySpot,  new Vector3(0f,-5f,0f));
+			if (Physics.Raycast (tRay, 5f, vWallLayer))
 				cAA.vInputType = "Wait";
 			else
-			cAA.vInputType = "MoveLeft";
+				cAA.vInputType = "MoveLeft";
 			break;
 		default:
-			cAA.vInputType = "Wait";
+				cAA.vInputType = "Wait";
 			break;
 		}
+		tMySpot.y = 1f;
+		Instantiate(vPlaceHolder,tMySpot,Quaternion.Euler(Vector3.zero));
 	}
 }
