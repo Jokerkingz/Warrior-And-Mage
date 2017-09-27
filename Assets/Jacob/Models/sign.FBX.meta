@@ -1,27 +1,15 @@
 fileFormatVersion: 2
-guid: c8dce7479838b9d499aecdfe0d55ef87
-timeCreated: 1505170494
+guid: b010c451c4efe2447aa730c58b080951
+timeCreated: 1506038759
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
   fileIDToRecycleName:
-    100000: Bottle
-    100002: cork
-    100004: liquid oooozzzz
-    100006: //RootNode
-    400000: Bottle
-    400002: cork
-    400004: liquid oooozzzz
-    400006: //RootNode
-    2300000: Bottle
-    2300002: cork
-    2300004: liquid oooozzzz
-    3300000: Bottle
-    3300002: cork
-    3300004: liquid oooozzzz
-    4300000: Bottle
-    4300002: liquid oooozzzz
-    4300004: cork
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Box001
     9500000: //RootNode
   materials:
     importMaterials: 1
