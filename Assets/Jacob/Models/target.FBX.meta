@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 658f5afef8a0baf4db801173e8310f39
-timeCreated: 1506641514
+guid: 77b03c706f187ce42b104cecefc863b4
+timeCreated: 1506640019
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
@@ -9,8 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Models_Scroll
-    7400000: Take 001
+    4300000: Circle001
     9500000: //RootNode
   materials:
     importMaterials: 1
