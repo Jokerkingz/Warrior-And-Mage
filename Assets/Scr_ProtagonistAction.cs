@@ -19,7 +19,7 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 	public LayerMask lPitLayer;
 	public GameObject vOtherPartner; // privatable
 	public GameObject vSkillBall;
-
+	public GameObject vSwipeObject;
 	// Note: Do not try Place holder for the protagonist because it WILL know if they will collide, but it will be tougher to calculate when the character is pushed. So Dont add a PlaceHolder object or script.
 
 
@@ -65,19 +65,19 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 				break;
 			case "PushN":
 				vDirection = "North";
-				vNextVect3 = transform.position + DirectionToPoint(vDirection,3);
+				vNextVect3 = transform.position + DirectionToPoint(vDirection,2);
 				break;
 			case "PushS":
 				vDirection = "South";
-				vNextVect3 = transform.position + DirectionToPoint(vDirection,3);
+				vNextVect3 = transform.position + DirectionToPoint(vDirection,2);
 				break;
 			case "PushW":
 				vDirection = "West";
-				vNextVect3 = transform.position + DirectionToPoint(vDirection,3);
+				vNextVect3 = transform.position + DirectionToPoint(vDirection,2);
 				break;
 			case "PushE":
 				vDirection = "East";
-				vNextVect3 = transform.position + DirectionToPoint(vDirection,3);
+				vNextVect3 = transform.position + DirectionToPoint(vDirection,2);
 				break;
 			case "PushNE":
 				vDirection = "NorthEast";
@@ -255,10 +255,23 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 	void AttackEnemy(){
 		if (cTS.vCurrentTarget != null) {
 			vLookDirection = Vector2.Angle(new Vector2(this.transform.position.x,this.transform.position.z),new Vector2(cTS.transform.position.x,cTS.transform.position.z));
-			if (Vector3.Distance (this.transform.position, cTS.transform.position) < 1.9f) {
-				Debug.Log ("I Attacked " + cTS.vCurrentTarget.name);
+			if (Vector3.Distance (this.transform.position, cTS.vCurrentTarget.transform.position) < 1.9f) {
+				//Debug.Log ("I Attacked " + cTS.vCurrentTarget.name);
 				//Temporaryattack = this.GetComponent<AttackScript>().Attackpoints;
 				//cTS.vCurrentTarget.GetComponent<Prameters> ().Damage = Temporaryattack;
+				Vector3 tGoto;
+				tGoto = cTS.vCurrentTarget.transform.position;
+				Vector3 tMyXZ = this.transform.position;
+				float tDifferenceX = tMyXZ.x - tGoto.x;
+				float tDifferenceY = tMyXZ.z - tGoto.z;
+				float tAngle;
+				tAngle = Mathf.Atan2 (tDifferenceX,tDifferenceY)*180/Mathf.PI;
+				tMyXZ.x -= tDifferenceX/2f;
+				tMyXZ.y = 1.5f;
+				tMyXZ.z -= tDifferenceY/2f;
+				GameObject tTemp = Instantiate(vSwipeObject) as GameObject;
+				tTemp.transform.position = tMyXZ;
+				tTemp.GetComponent<Scr_SwipeEffect>().vFacingDirection = tAngle;
 				cTS.vCurrentTarget.GetComponent<Scr_SFX_Damage_Blinker> ().vBlinkFrame += .01f;
 			}
 		}
@@ -298,7 +311,8 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 		return tResult;
 	}
 	/// Skill List ///
-	void SkillSort(string tWhichSkill){/*
+	void SkillSort(string tWhichSkill){
+		/*
 		if (GameObject.FindGameObjectsWithTag ("Breakable").Length > 0) {
 			GameObject tWall = GameObject.FindGameObjectWithTag ("Breakable");
 			float tOX = tWall.transform.position.x,

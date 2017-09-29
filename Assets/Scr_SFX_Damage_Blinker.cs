@@ -20,8 +20,8 @@ public class Scr_SFX_Damage_Blinker : MonoBehaviour {
 				this.GetComponent<MeshRenderer> ().enabled = true;
 				
 			if (vBlinkFrame > 3f) {
-				if (this.tag == "Enemy")
-					Destroy (this.gameObject);
+				//if (this.tag == "Enemy")
+				//	Destroy (this.gameObject);
 				vBlinkFrame = 0;
 			}
 		}

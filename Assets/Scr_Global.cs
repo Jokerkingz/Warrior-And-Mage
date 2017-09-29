@@ -107,8 +107,10 @@ public class Scr_Global : MonoBehaviour {
 					tThereAreAIs = true;}
 				if (!tThereAreAIs)
 					vCurrentTurnState = "PlayerInputWait";
-				else
-					vCurrentTurnState = "AIStart";
+				else{
+				 	if (Is_Everyone_Idle())
+						vCurrentTurnState = "AIStart";
+					}
 			break;
 		case "AIStart":
 				Those = GameObject.FindGameObjectsWithTag ("PlaceHolders");

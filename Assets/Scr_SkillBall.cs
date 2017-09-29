@@ -8,12 +8,15 @@ public class Scr_SkillBall : MonoBehaviour {
 	public List<GameObject> vObjectsAffected;
 	// Use this for initialization
 	void Start () {
-		
+		Invoke("RemoveSelf",1f);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
+	}
+	void RemoveSelf(){
+		Destroy(this.gameObject);
 	}
 	void OnTriggerEnter(Collider tOther){
 		switch (vSkillType){

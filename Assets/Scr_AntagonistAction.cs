@@ -10,10 +10,12 @@ public class Scr_AntagonistAction : MonoBehaviour {
 	public string vInputType;
 	public AnimationCurve vBounce;
 	public Scr_Global vGlobal; 
+	private Rigidbody cRB;
 	public string vDirection;
 
 	public Scr_TargetingSystem cTS;
 	public float vLookDirection; // Direction of the amibo after doing an action;
+	public LayerMask lPitLayer;
 
 
 
@@ -24,6 +26,7 @@ public class Scr_AntagonistAction : MonoBehaviour {
 		vNextVect3 = this.transform.position;
 		vAnimationFrame = 0;
 		vGlobal = GameObject.FindGameObjectWithTag ("GameController").GetComponent<Scr_Global> ();
+		cRB = this.GetComponent<Rigidbody>();
 		cTS = this.GetComponent<Scr_TargetingSystem>();
 	}
 	
@@ -53,19 +56,19 @@ public class Scr_AntagonistAction : MonoBehaviour {
 				break;
 			case "PushN":
 				vDirection = "North";
-				vNextVect3 = transform.position + DirectionToPoint(vDirection,3);
+				vNextVect3 = transform.position + DirectionToPoint(vDirection,2);
 				break;
 			case "PushS":
 				vDirection = "South";
-				vNextVect3 = transform.position + DirectionToPoint(vDirection,3);
+				vNextVect3 = transform.position + DirectionToPoint(vDirection,2);
 				break;
 			case "PushW":
 				vDirection = "West";
-				vNextVect3 = transform.position + DirectionToPoint(vDirection,3);
+				vNextVect3 = transform.position + DirectionToPoint(vDirection,2);
 				break;
 			case "PushE":
 				vDirection = "East";
-				vNextVect3 = transform.position + DirectionToPoint(vDirection,3);
+				vNextVect3 = transform.position + DirectionToPoint(vDirection,2);
 				break;
 			case "PushNE":
 				vDirection = "NorthEast";
@@ -102,9 +105,18 @@ public class Scr_AntagonistAction : MonoBehaviour {
 		case "Move":
 			//vAnimationFrame += .05f // is correct
 			vAnimationFrame = vGlobal.Global_AnimationFrame;
-			if (vGlobal.vCurrentTurnState == "AIEndAnimate") {
+			if (vGlobal.vCurrentTurnState == "PlayerEndAnimate") {
 				vAnimationFrame = 0f;
 				vAnimationState = "Idle";
+				PitFallCheck();
+				vInputType = "Wait";
+				transform.position = Vector3.Lerp (vPrevVect3, vNextVect3, 1f);
+				// Snap
+				transform.position = new Vector3(Mathf.Round(transform.position.x),1f,Mathf.Round(transform.position.z));
+			}else if (vGlobal.vCurrentTurnState == "AIEndAnimate") {
+				vAnimationFrame = 0f;
+				vAnimationState = "Idle";
+				PitFallCheck();
 				vInputType = "Wait";
 				transform.position = Vector3.Lerp (vPrevVect3, vNextVect3, 1f);
 				// Snap
@@ -114,11 +126,16 @@ public class Scr_AntagonistAction : MonoBehaviour {
 				transform.position = new Vector3(transform.position.x,vBounce.Evaluate (vAnimationFrame)+1f,transform.position.z);
 			}
 			break;
+		case "Falling":
+			if (transform.position.y < -10f)
+				Falling();
+			break;
 		case "MoveCorrect":
 			vAnimationFrame += .05f; // is correct
 			if (vAnimationFrame > 1f) {
 				vAnimationFrame = 0f;
 				vAnimationState = "Idle";
+				PitFallCheck();
 				vInputType = "Wait";
 				transform.position = Vector3.Lerp (vPrevVect3, vNextVect3, 1f);
 				transform.position = new Vector3(Mathf.Round(transform.position.x),1f,Mathf.Round(transform.position.z));
@@ -155,6 +172,22 @@ public class Scr_AntagonistAction : MonoBehaviour {
 				}
 			}
 	}
+	void PitFallCheck(){
+		Ray tRay;
+		Vector3 tMySpot = this.transform.position;
+		tRay = new Ray (tMySpot,  new Vector3(0f,-2f,0f));
+		if (Physics.Raycast (tRay, 2f, lPitLayer)){
+			cRB.useGravity = true;
+			cRB.isKinematic = false;
+			vAnimationState = "Falling";
+
+		}
+	}
+	void Falling(){
+		Destroy(this.gameObject);
+
+		}
+
 	//void AttackEnemy(){
 		/* Generate a swipe in a given spot
 		if (GameObject.FindGameObjectsWithTag ("Enemy").Length > 0) {
