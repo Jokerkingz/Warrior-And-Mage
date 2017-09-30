@@ -1,23 +1,15 @@
 fileFormatVersion: 2
-guid: 951066f6c4e751045a406b8b1b9b4a2a
-timeCreated: 1506642808
+guid: d20f7f91e3e3cb64383ebff1b0c55827
+timeCreated: 1506787746
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
   fileIDToRecycleName:
-    100000: Box001
-    100002: Box002
-    100004: //RootNode
-    400000: Box001
-    400002: Box002
-    400004: //RootNode
-    2300000: Box001
-    2300002: Box002
-    3300000: Box001
-    3300002: Box002
-    4300000: Box001
-    4300002: Box002
-    9500000: //RootNode
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: torch
   materials:
     importMaterials: 1
     materialName: 0
@@ -87,7 +79,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
