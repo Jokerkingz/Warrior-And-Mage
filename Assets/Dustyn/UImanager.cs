@@ -17,7 +17,7 @@ public class UImanager : MonoBehaviour {
 
 	public statManager sm;
 
-	private static bool UIExist;
+	/*private static bool UIExist;
 
 	void Awake()
 	{
@@ -28,7 +28,7 @@ public class UImanager : MonoBehaviour {
 			Destroy (gameObject);
 		}
 
-	}
+	}*/
 
 	void Update () {
 
