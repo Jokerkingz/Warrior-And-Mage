@@ -37,6 +37,7 @@ public class statManager : MonoBehaviour {
 	public GameObject expBar;
 	public GameObject lvlTxt;
 	public GameObject LevelUpSystem;
+	public attackStat attStat;
 
 	void Start () {
 		LevelUpSystem = GameObject.Find("LevelingUpSystem");
@@ -44,6 +45,8 @@ public class statManager : MonoBehaviour {
 		curSpec = maxSpec;
 		curExp = 0;
 	
+		attStat = this.gameObject.GetComponent<attackStat> ();
+
 	}
 	
 
@@ -121,6 +124,8 @@ public class statManager : MonoBehaviour {
 	public void AttackLvlUp()
 	{
 		attackLvl++;
+		attStat.SendMessage ("UpgradeAttack");
+
 	}
 	public void DefenceLvlUp()
 	{
