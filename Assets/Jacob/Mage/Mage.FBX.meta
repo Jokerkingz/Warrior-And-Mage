@@ -1,37 +1,27 @@
 fileFormatVersion: 2
-guid: 967b8dbcf49901447be03ef234913175
-timeCreated: 1506483243
+guid: d167309a64bb7f5459c3878a31a6ff56
+timeCreated: 1507180776
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
   fileIDToRecycleName:
-    100000: amiibothing
-    100002: Cloak
-    100004: Hat
-    100006: //RootNode
-    100008: Mage
-    100010: Staff
-    400000: amiibothing
-    400002: Cloak
-    400004: Hat
-    400006: //RootNode
-    400008: Mage
-    400010: Staff
-    2300000: amiibothing
-    2300002: Cloak
-    2300004: Hat
-    2300006: Mage
-    2300008: Staff
-    3300000: amiibothing
-    3300002: Cloak
-    3300004: Hat
-    3300006: Mage
-    3300008: Staff
+    100000: Cloak
+    100002: Hat
+    100004: //RootNode
+    100006: Mage
+    400000: Cloak
+    400002: Hat
+    400004: //RootNode
+    400006: Mage
+    2300000: Cloak
+    2300002: Hat
+    2300004: Mage
+    3300000: Cloak
+    3300002: Hat
+    3300004: Mage
     4300000: Hat
     4300002: Cloak
-    4300004: Staff
-    4300006: Mage
-    4300008: amiibothing
+    4300004: Mage
     9500000: //RootNode
   materials:
     importMaterials: 1
