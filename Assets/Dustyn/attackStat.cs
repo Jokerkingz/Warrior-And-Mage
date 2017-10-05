@@ -7,12 +7,12 @@ public class attackStat : MonoBehaviour {
 	public statManager sm;
 
 	public int attackPower;
-	public int nextAttackPower;
 
 	public float minAttack;
 	public float maxAttack;
 	public float Damage;
 
+	public float attackBoost;
 
 	void Start () {
 		sm = this.gameObject.GetComponent<statManager> ();
@@ -34,7 +34,7 @@ public class attackStat : MonoBehaviour {
 
 	public void UpgradeAttack()
 	{
-		minAttack += 2;
-		maxAttack += 2;
+		minAttack += attackBoost;
+		maxAttack += attackBoost;
 	}
 }
