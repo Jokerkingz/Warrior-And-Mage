@@ -64,7 +64,7 @@ public class Scr_Global : MonoBehaviour {
 		SubStatus = "Play";
 		Global_WarriorItem = 0f;
 		Global_MageItem = 180f;
-		SkillList = new string[8]{"BasicAttack","Smash","Roar","Swing","BasicAttack","Push","Ice Spear","Block"};
+		SkillList = new string[8]{"BasicAttack","Bash","Roar","Swing","BasicAttack","Push","Ice Spear","Block"};
 		vNextTurn = "Player";
 	}
 
@@ -106,7 +106,7 @@ public class Scr_Global : MonoBehaviour {
 				foreach (GameObject That in Those) {
 					tThereAreAIs = true;}
 				if (!tThereAreAIs)
-					vCurrentTurnState = "PlayerInputWait";
+					vCurrentTurnState = "EnvironmentStart";
 				else{
 				 	if (Is_Everyone_Idle())
 						vCurrentTurnState = "AIStart";
@@ -133,15 +133,28 @@ public class Scr_Global : MonoBehaviour {
 					}
 			break;
 			case "AIEndAnimate":
-					vCurrentTurnState = "PlayerInputWait";
+				vCurrentTurnState = "EnvironmentStart";
 			break;
 			case "EnvironmentStart":
-
-
+				Those = GameObject.FindGameObjectsWithTag ("Movable");
+					foreach (GameObject That in Those) {
+						That.GetComponent<Scr_MovingWall>().vEvent = "StartActing";
+						}
+			vCurrentTurnState = "EnvironmentAnimate";
+				//Global_AnimationFrame += Time.deltaTime*vDeltaTimeAdjustor;
+				//if (Global_AnimationFrame >= 1f) {
+				//	Global_AnimationFrame = 1f;
+				//	vCurrentTurnState = "PlayerEndAnimate";}
 			break;
 			case "EnvironmentAnimate":
-				
-
+				bool tReady = true;
+				Those = GameObject.FindGameObjectsWithTag ("Movable");
+					foreach (GameObject That in Those) {
+						if (That.GetComponent<Scr_MovingWall>().vEvent != "Idle")
+							tReady = false;
+						}
+				if (tReady)
+					vCurrentTurnState = "PlayerInputWait";
 			break;
 			case "EnvironmentEnd":
 				

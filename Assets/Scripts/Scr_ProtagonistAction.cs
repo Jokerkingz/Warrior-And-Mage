@@ -108,6 +108,11 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 				tSkilling = true;
 				vNextVect3 = transform.position;
 				break;
+			case "Bash":
+				BashSpell();
+				tSkilling = true;
+				vNextVect3 = transform.position;
+				break;
 			}
 			// Snap
 			vPrevVect3 = new Vector3(Mathf.Round(vPrevVect3.x),1f,Mathf.Round(vPrevVect3.z));
@@ -166,7 +171,7 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 		}
 	}
 	void OnTriggerStay(Collider Other){
-		if (Other.tag == "Wall" || Other.tag == "Breakable") {
+		if (Other.tag == "Wall" || Other.tag == "Breakable" || Other.tag == "Movable" ) {
 			if (vAnimationState == "Move") {
 				vAnimationState = "MoveBack";
 				vPrevVect3 = new Vector3 (Mathf.Round (transform.position.x), 1f, Mathf.Round (transform.position.z));
@@ -326,6 +331,15 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 			}
 		}*/
 	}
+	void BashSpell(){
+		GameObject tObj;
+		Scr_SkillBall tStat;
+		tObj = Instantiate(vSkillBall) as GameObject;
+		tObj.transform.position = transform.position;
+		tStat = tObj.GetComponent<Scr_SkillBall>();
+		tStat.vSkillType = "Bash";
+		}
+
 	void PushSpell(){
 		GameObject tObj;
 		Scr_SkillBall tStat;

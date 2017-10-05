@@ -160,7 +160,7 @@ public class Scr_AntagonistAction : MonoBehaviour {
 		}
 	}
 	void OnTriggerStay(Collider Other){
-		if (Other.tag == "Wall" || Other.tag == "Breakable") {
+		if (Other.tag == "Wall" || Other.tag == "Breakable" || Other.tag == "Movable") {
 			if (vAnimationState == "Move") {
 				vAnimationState = "MoveBack";
 				vPrevVect3 = new Vector3 (Mathf.Round (transform.position.x), 1f, Mathf.Round (transform.position.z));

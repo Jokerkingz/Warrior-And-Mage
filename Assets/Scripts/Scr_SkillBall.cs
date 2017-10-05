@@ -54,7 +54,14 @@ public class Scr_SkillBall : MonoBehaviour {
 					}
 				}*/
 		break;
-		case "Smash":/*
+		case "Bash":
+			if (tOther.tag == "Breakable"){
+				if (!HaveYouBeenTagged(tOther.gameObject)){
+					vObjectsAffected.Add(tOther.gameObject);
+					tOther.GetComponent<Scr_BreakablePiece>().Activate();
+					}
+				}
+			/*
 			if (tOther.tag == "Enemy"){
 				if (HaveYouBeenTagged(tOther)){
 					vObjectsAffected.Add(tOther.gameObject);
