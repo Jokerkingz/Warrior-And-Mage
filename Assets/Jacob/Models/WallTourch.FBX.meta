@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 5ba5fcb41328fc54ab6307b7568644f5
-timeCreated: 1506537486
+guid: d20f7f91e3e3cb64383ebff1b0c55827
+timeCreated: 1506787746
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: tent00
+    4300000: torch
   materials:
     importMaterials: 1
     materialName: 0

@@ -1,32 +1,17 @@
 fileFormatVersion: 2
-guid: d0c1eee4486a58444b20beb9e812febd
-timeCreated: 1506527279
+guid: b4560350e684213489e087f1c2fd33b8
+timeCreated: 1507173744
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
   fileIDToRecycleName:
     100000: //RootNode
-    100002: Chest
-    100004: Hindge
-    100006: Hindge 1
-    100008: Lid
     400000: //RootNode
-    400002: Chest
-    400004: Hindge
-    400006: Hindge 1
-    400008: Lid
-    2300000: Chest
-    2300002: Hindge
-    2300004: Hindge 1
-    2300006: Lid
-    3300000: Chest
-    3300002: Hindge
-    3300004: Hindge 1
-    3300006: Lid
-    4300000: Chest
-    4300002: Lid
-    4300004: Hindge
-    4300006: Hindge
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Key
+    7400000: Take 001
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -96,7 +81,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
