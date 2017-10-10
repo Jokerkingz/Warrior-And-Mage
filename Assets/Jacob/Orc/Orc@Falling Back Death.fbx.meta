@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cd3fe657c1a8c0843abad3bcb20661d7
+guid: 4cedd486d27ea40489edac5c75ba3192
 timeCreated: 1507617034
 licenseType: Free
 ModelImporter:
@@ -46,8 +46,8 @@ ModelImporter:
     100076: mixamorig:Spine
     100078: mixamorig:Spine1
     100080: mixamorig:Spine2
-    100082: //RootNode
-    100084: Orc
+    100082: Orc
+    100084: //RootNode
     400000: mixamorig:Head
     400002: mixamorig:HeadTop_End
     400004: mixamorig:Hips
@@ -89,10 +89,10 @@ ModelImporter:
     400076: mixamorig:Spine
     400078: mixamorig:Spine1
     400080: mixamorig:Spine2
-    400082: //RootNode
-    400084: Orc
+    400082: Orc
+    400084: //RootNode
     4300000: Orc
-    7400000: TPose
+    7400000: mixamo.com
     9500000: //RootNode
     13700000: Orc
   materials:
@@ -118,35 +118,7 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations:
-    - serializedVersion: 16
-      name: TPose
-      takeName: mixamo.com
-      firstFrame: 0
-      lastFrame: 1
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+    clipAnimations: []
     isReadable: 1
   meshes:
     lODScreenPercentages: []
