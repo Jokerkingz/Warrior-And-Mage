@@ -20,5 +20,6 @@ public class Scr_FloorTrigger : MonoBehaviour {
 
 	void OnTriggerStay(){
 		vPressure +=1f;
+		vParent.GetComponent<Scr_FloorBreakable>().Activate();
 	}
 }

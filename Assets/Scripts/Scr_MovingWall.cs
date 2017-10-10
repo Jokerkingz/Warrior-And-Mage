@@ -7,6 +7,7 @@ public class Scr_MovingWall : MonoBehaviour {
 	public Vector3 vOrigin;
 	public GameObject vWall;
 	public float vIsOn;
+	private Scr_SharedEnviro cSE;
 	public string vEvent;
 	public float vLerp;
 	public Vector3 vWallGoTo;
@@ -16,6 +17,7 @@ public class Scr_MovingWall : MonoBehaviour {
 	public bool vIHaveToAct;
 	// Use this for initialization
 	void Start () {
+		cSE = GetComponent<Scr_SharedEnviro>();
 		vOrigin = this.transform.position;
 		vGoto = vOrigin + vGoto;
 		vWallGoTo = vGoto;
@@ -33,12 +35,16 @@ public class Scr_MovingWall : MonoBehaviour {
 			vIHaveToAct = false;
 		}
 
-		if (vEvent ==  "StartActing" && vIHaveToAct)
-			vEvent = "Act";
-		if (vEvent ==  "StartActing" && !vIHaveToAct) 
-			vEvent =  "Idle";
+		if (cSE.vEvent ==  "StartActing" && vIHaveToAct)
+			cSE.vEvent = "Act";
+		if (cSE.vEvent ==  "StartActing" && !vIHaveToAct) 
+			cSE.vEvent =  "Idle";
 
-		if (vEvent == "Act"){
+
+
+
+		if (cSE.vEvent == "Act"){
+			//cSE.vEvent =  "Idle";
 			if (vIsOn>0f){
 				vLerp += 2f*Time.deltaTime;
 				this.transform.position = vGoto;
@@ -58,7 +64,7 @@ public class Scr_MovingWall : MonoBehaviour {
 		vIsOn = Mathf.Clamp(vIsOn,0f,1f);
 		vLerp = Mathf.Clamp(vLerp,0f,1f);
 		if (vLerp == 0f || vLerp == 1f)
-			vEvent = "Idle";
+			cSE.vEvent = "Idle";
 		vWall.transform.position = Vector3.Lerp(vWallOrigin,vWallGoTo,vLerp);
 	}
 }

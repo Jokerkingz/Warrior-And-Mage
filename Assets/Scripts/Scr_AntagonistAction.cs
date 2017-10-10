@@ -172,7 +172,7 @@ public class Scr_AntagonistAction : MonoBehaviour {
 				}
 			}
 	}
-	void PitFallCheck(){
+	public void PitFallCheck(){
 		Ray tRay;
 		Vector3 tMySpot = this.transform.position;
 		tRay = new Ray (tMySpot,  new Vector3(0f,-2f,0f));

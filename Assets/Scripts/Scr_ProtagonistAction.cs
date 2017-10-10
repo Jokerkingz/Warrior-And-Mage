@@ -184,7 +184,7 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 			}
 	}
 
-	void PitFallCheck(){
+	public void PitFallCheck(){
 		Ray tRay;
 		Vector3 tMySpot = this.transform.position;
 		tRay = new Ray (tMySpot,  new Vector3(0f,-2f,0f));
@@ -277,7 +277,10 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 				GameObject tTemp = Instantiate(vSwipeObject) as GameObject;
 				tTemp.transform.position = tMyXZ;
 				tTemp.GetComponent<Scr_SwipeEffect>().vFacingDirection = tAngle;
-				cTS.vCurrentTarget.GetComponent<Scr_SFX_Damage_Blinker> ().vBlinkFrame += .01f;
+				if (cTS.vCurrentTarget.tag == "Enemy")
+					cTS.vCurrentTarget.GetComponent<Scr_SFX_Damage_Blinker> ().vBlinkFrame += .01f;
+				else if (cTS.vCurrentTarget.tag == "Targetable")
+					cTS.vCurrentTarget.GetComponent<Scr_Switch> ().GetHit();// += .01f;
 			}
 		}
 	}

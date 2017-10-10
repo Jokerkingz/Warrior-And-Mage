@@ -138,7 +138,8 @@ public class Scr_Global : MonoBehaviour {
 			case "EnvironmentStart":
 				Those = GameObject.FindGameObjectsWithTag ("Movable");
 					foreach (GameObject That in Those) {
-						That.GetComponent<Scr_MovingWall>().vEvent = "StartActing";
+					That.GetComponent<Scr_SharedEnviro>().vEvent = "StartActing";
+					Debug.Log(That.name+" Start Acting");
 						}
 			vCurrentTurnState = "EnvironmentAnimate";
 				//Global_AnimationFrame += Time.deltaTime*vDeltaTimeAdjustor;
@@ -150,15 +151,29 @@ public class Scr_Global : MonoBehaviour {
 				bool tReady = true;
 				Those = GameObject.FindGameObjectsWithTag ("Movable");
 					foreach (GameObject That in Those) {
-						if (That.GetComponent<Scr_MovingWall>().vEvent != "Idle")
+					if (That.GetComponent<Scr_SharedEnviro>().vEvent != "Idle")
 							tReady = false;
 						}
 				if (tReady)
-					vCurrentTurnState = "PlayerInputWait";
+					vCurrentTurnState = "EnvironmentEnd";
 			break;
 			case "EnvironmentEnd":
-				
 
+				Those = GameObject.FindGameObjectsWithTag ("Warrior");
+					foreach (GameObject That in Those) {
+						That.GetComponent<Scr_ProtagonistAction>().PitFallCheck();
+						}
+				Those = GameObject.FindGameObjectsWithTag ("Mage");
+					foreach (GameObject That in Those) {
+						That.GetComponent<Scr_ProtagonistAction>().PitFallCheck();
+						}
+
+				Those = GameObject.FindGameObjectsWithTag ("Enemy");
+					foreach (GameObject That in Those) {
+						That.GetComponent<Scr_AntagonistAction>().PitFallCheck();
+						}
+			 	if (Is_Everyone_Idle())
+				vCurrentTurnState = "PlayerInputWait";
 			break;
 			case "Options":
 				

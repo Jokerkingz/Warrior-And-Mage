@@ -154,6 +154,25 @@ public class Scr_TargetingSystem : MonoBehaviour {
 					Debug.DrawRay (tOwner.transform.position, tAngle,Color.gray);
 				}
 			}
+			Those = GameObject.FindGameObjectsWithTag ("Targetable");
+			foreach (GameObject That in Those) {
+				tTargetSpot = That.transform.position;
+				tDistance = Vector3.Distance (this.transform.position, tTargetSpot);
+				if (tDistance < vFarthestDistance) {
+					tAngle = tTargetSpot - this.transform.position;
+					rRay = new Ray (tOwner.transform.position, tAngle);
+					if (!Physics.Raycast (rRay, tDistance, vRayLayers)) {
+						Debug.DrawRay (tOwner.transform.position, tAngle, Color.green);
+						myTargets.Add (That.gameObject);
+					}
+					else
+						Debug.DrawRay (tOwner.transform.position, tAngle,Color.red);
+				} else {
+					tAngle = tTargetSpot - this.transform.position;
+					rRay = new Ray (tOwner.transform.position, tAngle);
+					Debug.DrawRay (tOwner.transform.position, tAngle,Color.gray);
+				}
+			}
 			break;
 		}
 	}
