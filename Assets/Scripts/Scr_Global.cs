@@ -126,7 +126,18 @@ public class Scr_Global : MonoBehaviour {
 					vCurrentTurnState = "AIAnimate";
 			break;
 			case "AIAnimate":
-				Global_AnimationFrame += Time.deltaTime*vDeltaTimeAdjustor;
+				bool vAnyoneonSight = false;
+				Those = GameObject.FindGameObjectsWithTag ("Enemy");
+				foreach (GameObject That in Those) {
+				GameObject tTemp = That.GetComponent<Scr_AntagonistAction>().vModel;
+				Renderer tRender = tTemp.GetComponent<MeshRenderer>();
+					Plane[] tPlane = GeometryUtility.CalculateFrustumPlanes(Camera.main);
+					if (GeometryUtility.TestPlanesAABB(tPlane,tRender.bounds))
+						vAnyoneonSight = true;
+					}
+				if (vAnyoneonSight)
+					Global_AnimationFrame += Time.deltaTime*vDeltaTimeAdjustor;
+				else Global_AnimationFrame += .5f;
 				if (Global_AnimationFrame >= 1f) {
 					Global_AnimationFrame = 1f;
 					vCurrentTurnState = "AIEndAnimate";
@@ -139,7 +150,10 @@ public class Scr_Global : MonoBehaviour {
 				Those = GameObject.FindGameObjectsWithTag ("Movable");
 					foreach (GameObject That in Those) {
 					That.GetComponent<Scr_SharedEnviro>().vEvent = "StartActing";
-					Debug.Log(That.name+" Start Acting");
+			}
+				Those = GameObject.FindGameObjectsWithTag ("Targetable");
+					foreach (GameObject That in Those) {
+					That.GetComponent<Scr_Switch>().vEvent = "StartActing";
 						}
 			vCurrentTurnState = "EnvironmentAnimate";
 				//Global_AnimationFrame += Time.deltaTime*vDeltaTimeAdjustor;

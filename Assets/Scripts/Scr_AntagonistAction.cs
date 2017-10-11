@@ -12,6 +12,7 @@ public class Scr_AntagonistAction : MonoBehaviour {
 	public Scr_Global vGlobal; 
 	private Rigidbody cRB;
 	public string vDirection;
+	public GameObject vModel;
 
 	public Scr_TargetingSystem cTS;
 	public float vLookDirection; // Direction of the amibo after doing an action;
@@ -160,7 +161,7 @@ public class Scr_AntagonistAction : MonoBehaviour {
 		}
 	}
 	void OnTriggerStay(Collider Other){
-		if (Other.tag == "Wall" || Other.tag == "Breakable" || Other.tag == "Movable") {
+		if (Other.tag == "Wall" || Other.tag == "Breakable" || Other.tag == "Movable" || Other.tag == "Targetable") {
 			if (vAnimationState == "Move") {
 				vAnimationState = "MoveBack";
 				vPrevVect3 = new Vector3 (Mathf.Round (transform.position.x), 1f, Mathf.Round (transform.position.z));

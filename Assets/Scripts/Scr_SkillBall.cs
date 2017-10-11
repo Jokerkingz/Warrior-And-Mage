@@ -26,8 +26,7 @@ public class Scr_SkillBall : MonoBehaviour {
 						vObjectsAffected.Add(tOther.gameObject);
 						string tDirection = PointToRefinedDirection(tOther.gameObject);
 						tOther.GetComponent<Scr_ProtagonistAction>().vAnimationState = "StartActing";
-					tOther.GetComponent<Scr_ProtagonistAction>().vInputType = "Push"+tDirection;
-						Debug.Log("Push"+tDirection);
+						tOther.GetComponent<Scr_ProtagonistAction>().vInputType = "Push"+tDirection;
 						}
 					}
 				if (tOther.tag == "Enemy"){

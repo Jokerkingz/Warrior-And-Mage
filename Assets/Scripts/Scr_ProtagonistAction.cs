@@ -171,7 +171,7 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 		}
 	}
 	void OnTriggerStay(Collider Other){
-		if (Other.tag == "Wall" || Other.tag == "Breakable" || Other.tag == "Movable" ) {
+		if (Other.tag == "Wall" || Other.tag == "Breakable" || Other.tag == "Movable" || Other.tag == "Targetable") {
 			if (vAnimationState == "Move") {
 				vAnimationState = "MoveBack";
 				vPrevVect3 = new Vector3 (Mathf.Round (transform.position.x), 1f, Mathf.Round (transform.position.z));
