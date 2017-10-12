@@ -6,8 +6,8 @@ public class statManager : MonoBehaviour {
 
 	[Header("Stat Ints")]
 
-	public int maxHealth;
-	public int curHealth;
+	public float maxHealth;
+	public float curHealth;
 
 	//NOTE: Spec refers to either Stamina or Mana
 	public int maxSpec;
@@ -16,6 +16,7 @@ public class statManager : MonoBehaviour {
 	public int attackLvl;
 	public int defenseLvl;
 
+	//public float healthToRemove;
 	[Header("Leveling")]
 
 	public int curLvl;
@@ -48,11 +49,16 @@ public class statManager : MonoBehaviour {
 	
 		attStat = this.gameObject.GetComponent<attackStat> ();
 		defStat = this.gameObject.GetComponent<defenseStat> ();
+
+		expBar = GameObject.Find ("ExperienceBar");
+		lvlTxt = GameObject.Find("LevelText");
+
+	
 	}
 	
 
 	void Update () {
-
+		//healthToRemove = defStat.healthToRemove;
 	
 		// FOR TESTING PURPOSES
 
@@ -134,4 +140,10 @@ public class statManager : MonoBehaviour {
 		defStat.SendMessage ("UpgradeDefense");
 	}
 
+
+	public void Damage(float healthToRemove)
+	{
+		curHealth += healthToRemove;
+		healthBar.SendMessage ("Appear");
+	}
 }

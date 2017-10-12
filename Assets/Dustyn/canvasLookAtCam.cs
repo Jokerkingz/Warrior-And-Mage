@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class canvastest : MonoBehaviour {
+public class canvasLookAtCam : MonoBehaviour {
 
 	//In World UI faces camera
 
 	public Transform target;
 
 	void Start () {
+		
 	}
 
 	void Update () {

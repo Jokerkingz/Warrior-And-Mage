@@ -7,7 +7,7 @@ public class defenseStat : MonoBehaviour {
 	public statManager sm;
 
 	public int defensePower;
-	public int Health;
+
 	public float healthToRemove;
 
 	public float minDef;
@@ -22,7 +22,6 @@ public class defenseStat : MonoBehaviour {
 
 	void Update () {
 
-		Health = sm.curHealth;
 
 		if (Input.GetKeyDown(KeyCode.Home)){
 			Protection= (Mathf.Round(Random.Range (minDef, maxDef)));
@@ -36,9 +35,10 @@ public class defenseStat : MonoBehaviour {
 		maxDef += defBoost;
 	}
 
-	public void Damage(float dmg)
+
+	public void DamageEquation(float dmg)
 	{
-		dmg -= Protection;
-		dmg -= Health;
+		healthToRemove = Protection - dmg;
+		sm.SendMessage ("Damage");
 	}
 }
