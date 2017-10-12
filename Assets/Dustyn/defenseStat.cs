@@ -39,6 +39,11 @@ public class defenseStat : MonoBehaviour {
 	public void DamageEquation(float dmg)
 	{
 		healthToRemove = Protection - dmg;
-		sm.SendMessage ("Damage");
+		if (healthToRemove >= 0) {
+			healthToRemove = -1f;
+		}
+		sm.SendMessage ("Damage", healthToRemove);
+
 	}
+
 }
