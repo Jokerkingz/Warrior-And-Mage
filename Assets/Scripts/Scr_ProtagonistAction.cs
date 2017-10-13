@@ -10,6 +10,7 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 	public string vInputType;
 	public AnimationCurve vBounce;
 	public Scr_Global vGlobal;
+	private Scr_AnimationControl cAC;
 	private Rigidbody cRB;
 	public string vDirection;
 
@@ -32,6 +33,7 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 		vGlobal = GameObject.FindGameObjectWithTag ("GameController").GetComponent<Scr_Global> ();
 		cRB = this.GetComponent<Rigidbody>();
 		cTS = this.GetComponent<Scr_TargetingSystem>();
+		cAC = this.GetComponent<Scr_AnimationControl>();
 		if (this.tag=="Mage")
 			vOtherPartner = GameObject.FindGameObjectWithTag("Warrior");
 		else  if (this.tag == "Warrior")
@@ -50,50 +52,62 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 			case "MoveUp":
 				vDirection = "North";
 				vNextVect3 = transform.position + DirectionToPoint(vDirection,1);
+				cAC.Act("Idle",DirectionToPoint(vDirection,1));
 				break;
 			case "MoveDown":
 				vDirection = "South";
 				vNextVect3 = transform.position + DirectionToPoint(vDirection,1);
+				cAC.Act("Idle",DirectionToPoint(vDirection,1));
 				break;
 			case "MoveLeft":
 				vDirection = "West";
 				vNextVect3 = transform.position + DirectionToPoint(vDirection,1);
+				cAC.Act("Idle",DirectionToPoint(vDirection,1));
 				break;
 			case "MoveRight":
 				vDirection = "East";
 				vNextVect3 = transform.position + DirectionToPoint(vDirection,1);
+				cAC.Act("Idle",DirectionToPoint(vDirection,1));
 				break;
 			case "PushN":
 				vDirection = "North";
 				vNextVect3 = transform.position + DirectionToPoint(vDirection,2);
+				cAC.Act("Idle",DirectionToPoint(vDirection,1));
 				break;
 			case "PushS":
 				vDirection = "South";
 				vNextVect3 = transform.position + DirectionToPoint(vDirection,2);
+				cAC.Act("Idle",DirectionToPoint(vDirection,1));
 				break;
 			case "PushW":
 				vDirection = "West";
 				vNextVect3 = transform.position + DirectionToPoint(vDirection,2);
+				cAC.Act("Idle",DirectionToPoint(vDirection,1));
 				break;
 			case "PushE":
 				vDirection = "East";
 				vNextVect3 = transform.position + DirectionToPoint(vDirection,2);
+				cAC.Act("Idle",DirectionToPoint(vDirection,1));
 				break;
 			case "PushNE":
 				vDirection = "NorthEast";
 				vNextVect3 = transform.position + DirectionToPoint(vDirection,1);
+				cAC.Act("Idle",DirectionToPoint(vDirection,1));
 				break;
 			case "PushSE":
 				vDirection = "SouthEast";
 				vNextVect3 = transform.position + DirectionToPoint(vDirection,1);
+				cAC.Act("Idle",DirectionToPoint(vDirection,1));
 				break;
 			case "PushSW":
 				vDirection = "SouthWest";
 				vNextVect3 = transform.position + DirectionToPoint(vDirection,1);
+				cAC.Act("Idle",DirectionToPoint(vDirection,1));
 				break;
 			case "PushNW":
 				vDirection = "NorthWest";
 				vNextVect3 = transform.position + DirectionToPoint(vDirection,1);
+				cAC.Act("Idle",DirectionToPoint(vDirection,1));
 				break;
 
 			case "BasicAttack":
@@ -192,6 +206,7 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 			cRB.useGravity = true;
 			cRB.isKinematic = false;
 			vAnimationState = "Falling";
+			cAC.Act("Fall",Vector3.zero);
 
 		}
 	}
@@ -277,6 +292,7 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 				GameObject tTemp = Instantiate(vSwipeObject) as GameObject;
 				tTemp.transform.position = tMyXZ;
 				tTemp.GetComponent<Scr_SwipeEffect>().vFacingDirection = tAngle;
+				cAC.Act("Idle",Vector3.Normalize(new Vector3(-tDifferenceX,0f,-tDifferenceY)));
 				if (cTS.vCurrentTarget.tag == "Enemy")
 					cTS.vCurrentTarget.GetComponent<Scr_SFX_Damage_Blinker> ().vBlinkFrame += .01f;
 				else if (cTS.vCurrentTarget.tag == "Targetable")
@@ -320,19 +336,6 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 	}
 	/// Skill List ///
 	void SkillSort(string tWhichSkill){
-		/*
-		if (GameObject.FindGameObjectsWithTag ("Breakable").Length > 0) {
-			GameObject tWall = GameObject.FindGameObjectWithTag ("Breakable");
-			float tOX = tWall.transform.position.x,
-			tWX = .transform.position.x,
-			tOZ = tWall.transform.position.z,
-			tWZ = Object_Warrior.transform.position.z;
-			if (Vector2.Distance (new Vector2 (tOX, tOZ), new Vector2 (tWX, tWZ)) < 2f) {
-				cWPA.vAnimationState = "StartActing";
-				Destroy (tWall.gameObject);
-				cWPA.vInputType = "Wait";
-			}
-		}*/
 	}
 	void BashSpell(){
 		GameObject tObj;
@@ -350,27 +353,6 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 		tObj.transform.position = transform.position;
 		tStat = tObj.GetComponent<Scr_SkillBall>();
 		tStat.vSkillType = "Push";
-		/*
-		float tMX = Object_Mage.transform.position.x,
-		tWX = Object_Warrior.transform.position.x,
-		tMZ = Object_Mage.transform.position.z,
-		tWZ = Object_Warrior.transform.position.z;
-		cMPA.vAnimationState = "StartActing";
-		cMPA.vInputType = "Wait";
-		if (Vector2.Distance(new Vector2(tMX,tMZ),new Vector2(tWX,tWZ))<1.1f){
-			if ((tMX-tWX)*Mathf.Sign(tMX-tWX) > (tMZ-tWZ)*Mathf.Sign(tMZ-tWZ)) {
-				cWPA.vAnimationState = "StartActing";
-				if (tMX < tWX)
-					cWPA.vInputType = "PushUp";
-				if (tMX > tWX)
-					cWPA.vInputType = "PushDown";
-			} else {
-				cWPA.vAnimationState = "StartActing";
-				if (tMZ < tWZ)
-					cWPA.vInputType = "PushRight";
-				if (tMZ > tWZ)
-					cWPA.vInputType = "PushLeft";
-			}
-		}*/
+		cAC.Act("Spell3",Vector3.zero);
 	}
 }
