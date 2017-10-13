@@ -6,7 +6,7 @@ public class attackStat : MonoBehaviour {
 
 	public statManager sm;
 
-	public int attackPower;
+	//public int attackPower;
 
 	public float minAttack;
 	public float maxAttack;
@@ -20,7 +20,7 @@ public class attackStat : MonoBehaviour {
 	
 
 	void Update () {
-		attackPower = sm.attackLvl;
+		//attackPower = sm.attackLvl;
 
 		//TEST ATTACK
 		if (Input.GetKeyDown(KeyCode.End)){

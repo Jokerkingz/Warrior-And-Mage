@@ -6,7 +6,7 @@ public class defenseStat : MonoBehaviour {
 
 	public statManager sm;
 
-	public int defensePower;
+	//public int defensePower;
 
 	public float healthToRemove;
 

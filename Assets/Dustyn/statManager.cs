@@ -40,6 +40,7 @@ public class statManager : MonoBehaviour {
 	public GameObject LevelUpSystem;
 	public attackStat attStat;
 	public defenseStat defStat;
+	public Scr_CameraLockOn cam;
 
 	void Start () {
 		LevelUpSystem = GameObject.Find("LevelingUpSystem");
@@ -52,7 +53,7 @@ public class statManager : MonoBehaviour {
 
 		expBar = GameObject.Find ("ExperienceBar");
 		lvlTxt = GameObject.Find("LevelText");
-
+		cam = GameObject.FindObjectOfType<Scr_CameraLockOn> ();
 	
 	}
 	
@@ -89,7 +90,17 @@ public class statManager : MonoBehaviour {
 			lvlTxt.SendMessage ("Appear");
 		}
 
+		if (this.gameObject.name == "Pre_Mage" && curHealth <= 0f) {
+			Debug.Log ("Mage is dead");
+			cam.SendMessage ("MageDead");
+		}
+		if (this.gameObject.name == "Pre_Warrior" && curHealth <= 0f) {
+			Debug.Log ("Warrior is dead");
+			cam.SendMessage ("WarriorDead");
+		}
+
 		Stats ();
+	
 	}
 
 	void Stats ()

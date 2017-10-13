@@ -79,4 +79,17 @@ public class Scr_CameraLockOn : MonoBehaviour {
 
 		}
 	}
+
+	//DUSTYN Script starts
+	public void MageDead()
+	{
+		vObj_Warrior = GameObject.FindGameObjectWithTag ("Mage");
+
+	}
+	public void WarriorDead()
+	{
+		vObj_Mage = GameObject.FindGameObjectWithTag ("Warrior");
+	}
+	//DUSTYN script ends
+
 }
