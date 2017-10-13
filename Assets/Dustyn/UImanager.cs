@@ -16,6 +16,8 @@ public class UImanager : MonoBehaviour {
 	[Header("Characters References")]
 
 	public statManager sm;
+	public statManagerEnemy sme;
+	public string owner;
 
 	/*private static bool UIExist;
 
@@ -30,20 +32,35 @@ public class UImanager : MonoBehaviour {
 
 	}*/
 
+	void Stat()
+	{
+		if (owner == "player") {
+			sm =  this.GetComponentInParent<statManager> ();
+		} else {
+			sme =  this.GetComponentInParent<statManagerEnemy> ();
+		}
+	}
+
 	void Update () {
 
 		//HEALTH BAR
-		healthBar.maxValue =sm.maxHealth;
-		healthBar.value = sm.curHealth;
+		if (owner == "player") {
+			healthBar.maxValue = sm.maxHealth;
+			healthBar.value = sm.curHealth;
 
-		//SPEC BAR
-		specBar.maxValue=sm.maxSpec;
-		specBar.value = sm.curSpec;
+			//SPEC BAR
+			specBar.maxValue = sm.maxSpec;
+			specBar.value = sm.curSpec;
 
-		//EXPERIENCE BAR
-		expBar.maxValue=sm.nextLvl;
-		expBar.value = sm.curExp;
-		levelTxt.text = "LEVEL " + sm.curLvl;
+			//EXPERIENCE BAR
+			expBar.maxValue = sm.nextLvl;
+			expBar.value = sm.curExp;
+			levelTxt.text = "LEVEL " + sm.curLvl;
+
+		} else {
+//			healthBar.maxValue = sme.maxHealth;
+//			healthBar.value = sme.curHealth;
+		}
 	}
 		
 }

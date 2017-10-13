@@ -25,12 +25,13 @@ public class statManager : MonoBehaviour {
 	public int[] toLevelUp;
 	//public int LevelUpCredit;
 
-	[Header("KeyCodes for testing")]
+	/*[Header("KeyCodes for testing")]
 	public KeyCode DrainHealth;
 	public KeyCode ReplenishHealth;
 	public KeyCode DrainSpec;
 	public KeyCode ReplenishSpec;
 	public KeyCode AddXP;
+*/
 
 	[Header("References")]
 	public GameObject healthBar;
@@ -63,7 +64,7 @@ public class statManager : MonoBehaviour {
 	
 		// FOR TESTING PURPOSES
 
-		if (Input.GetKeyDown (DrainHealth)) {
+		/*if (Input.GetKeyDown (DrainHealth)) {
 			curHealth -= 10;
 			healthBar.SendMessage ("Appear");
 		}
@@ -84,7 +85,7 @@ public class statManager : MonoBehaviour {
 			curExp += 10;
 			expBar.SendMessage ("Appear");
 		}
-
+*/
 		if (curExp >= toLevelUp [curLvl]) {
 			LevelUp ();
 			lvlTxt.SendMessage ("Appear");
@@ -134,10 +135,12 @@ public class statManager : MonoBehaviour {
 	public void HealthLvlUp()
 	{
 		maxHealth += 10;
+		curHealth += 10;
 	}
 	public void SpecialLvlUp()
 	{
 		maxSpec += 5;
+		curSpec += 5;
 	}
 	public void AttackLvlUp()
 	{
@@ -151,10 +154,15 @@ public class statManager : MonoBehaviour {
 		defStat.SendMessage ("UpgradeDefense");
 	}
 
+	/*public void AddExp(float exp)
+	{
+	}*/
+
 
 	public void Damage(float healthToRemove)
 	{
 		curHealth += healthToRemove;
 		healthBar.SendMessage ("Appear");
+
 	}
 }

@@ -211,6 +211,9 @@ public class Scr_AntagonistAction : MonoBehaviour {
 			if (Vector3.Distance (this.transform.position, cTS.transform.position) < 2f) {
 				Debug.Log ("I Attacked " + cTS.vCurrentTarget.name);
 				cTS.vCurrentTarget.GetComponent<Scr_SFX_Damage_Blinker> ().vBlinkFrame += .01f;
+				float Damage = this.GetComponent<attackStat> ().DamageCalculation();
+				cTS.vCurrentTarget.GetComponent<defenseStat> ().DamageEquation (Damage);
+
 			}
 		}
 

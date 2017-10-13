@@ -285,16 +285,19 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 				float tDifferenceX = tMyXZ.x - tGoto.x;
 				float tDifferenceY = tMyXZ.z - tGoto.z;
 				float tAngle;
-				tAngle = Mathf.Atan2 (tDifferenceX,tDifferenceY)*180/Mathf.PI;
-				tMyXZ.x -= tDifferenceX/2f;
+				tAngle = Mathf.Atan2 (tDifferenceX, tDifferenceY) * 180 / Mathf.PI;
+				tMyXZ.x -= tDifferenceX / 2f;
 				tMyXZ.y = 1.5f;
-				tMyXZ.z -= tDifferenceY/2f;
-				GameObject tTemp = Instantiate(vSwipeObject) as GameObject;
+				tMyXZ.z -= tDifferenceY / 2f;
+				GameObject tTemp = Instantiate (vSwipeObject) as GameObject;
 				tTemp.transform.position = tMyXZ;
-				tTemp.GetComponent<Scr_SwipeEffect>().vFacingDirection = tAngle;
-				cAC.Act("Idle",Vector3.Normalize(new Vector3(-tDifferenceX,0f,-tDifferenceY)));
-				if (cTS.vCurrentTarget.tag == "Enemy")
+				tTemp.GetComponent<Scr_SwipeEffect> ().vFacingDirection = tAngle;
+				cAC.Act ("Idle", Vector3.Normalize (new Vector3 (-tDifferenceX, 0f, -tDifferenceY)));
+				if (cTS.vCurrentTarget.tag == "Enemy") {
 					cTS.vCurrentTarget.GetComponent<Scr_SFX_Damage_Blinker> ().vBlinkFrame += .01f;
+					float Damage = this.GetComponent<attackStat> ().DamageCalculation();
+					cTS.vCurrentTarget.GetComponent<defenseStat> ().DamageEquation (Damage);
+				}
 				else if (cTS.vCurrentTarget.tag == "Targetable")
 					cTS.vCurrentTarget.GetComponent<Scr_Switch> ().GetHit();// += .01f;
 			}
