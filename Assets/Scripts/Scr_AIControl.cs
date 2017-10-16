@@ -67,7 +67,7 @@ public class Scr_AIControl : MonoBehaviour {
 			}
 		else
 			{tTemp = tArray[Mathf.FloorToInt(Random.Range(0f,3.99f))];
-			Debug.Log ("MoveAction "+ tTemp);
+			//Debug.Log ("MoveAction "+ tTemp);
 			MoveAction (tTemp);
 		}
 	}

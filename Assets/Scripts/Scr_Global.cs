@@ -11,6 +11,7 @@ public class Scr_Global : MonoBehaviour {
 	private Scr_ProtagonistAction cWPA;
 	private GameObject Object_Mage;
 	private Scr_ProtagonistAction cMPA;
+	public Scr_CanvasController cCn;
 	public GameObject Object_Orc;
 	public float TurnCoolDown;
 	private float LerpFrame;
@@ -20,6 +21,8 @@ public class Scr_Global : MonoBehaviour {
 	private Transform Mage_Next;
 	private Transform Enemy_Previous;
 	private Transform Enemy_Next;
+
+	public GameObject vFallCheckPoint;
 
 	public string SubStatus; // Paused, options, shop, Item, Play
 	public string[] SkillList;
@@ -64,7 +67,8 @@ public class Scr_Global : MonoBehaviour {
 		SubStatus = "Play";
 		Global_WarriorItem = 0f;
 		Global_MageItem = 180f;
-		SkillList = new string[8]{"BasicAttack","Bash","Roar","Swing","BasicAttack","Push","Ice Spear","Block"};
+		SkillList = new string[8]{"BasicAttack","","","","BasicAttack","","",""};
+		//SkillList = new string[8]{"BasicAttack","Bash","Roar","Swing","BasicAttack","Push","IceSpear","Block"};
 		vNextTurn = "Player";
 	}
 
@@ -246,15 +250,19 @@ public class Scr_Global : MonoBehaviour {
 			}
 			if (Input.GetAxis ("WarriorWait") > 0f || Input.GetButton ("WarriorWait"))
 				Order = "Wait";
-		} else {
+		} else if (Input.GetButton ("WarriorItem"))
+		 	{cCn.vWarrItem += 1f;
 			if (Input.GetAxis ("WarriorAttack") < 0f || Input.GetButton ("WarriorAttack")) {
-				Order = "BasicAttack";
+				Order = "HealthPotion";
 			}
 			if (Input.GetAxis ("WarriorSkill1") < 0f || Input.GetButton ("WarriorSkill1")) {
-				Order = "Break";
+				Order = "Next Target";
 			}
-			if (Input.GetAxis ("WarriorSkill1") < 0f || Input.GetButton ("WarriorSkill1")) {
-				Order = "Break";
+			if (Input.GetAxis ("WarriorSkill2") < 0f || Input.GetButton ("WarriorSkill2")) {
+				Order = "TeleportStone";
+			}
+			if (Input.GetAxis ("WarriorSkill2") < 0f || Input.GetButton ("WarriorSkill2")) {
+				Order = "Elixer";
 			}
 		}
 		return Order;
@@ -288,6 +296,22 @@ public class Scr_Global : MonoBehaviour {
 			}
 			if (Input.GetAxis ("MageWait") > 0f || Input.GetButton ("MageWait"))
 				Order = "Wait";
+				}
+			else if (Input.GetButton ("MageItem")){
+				{cCn.vMageItem += 1f;
+				if (Input.GetButton ("MageAttack")) {
+					Order = "HealthPotion";
+					}
+				if (Input.GetButton ("MageSkill1")) {
+					Order = "Next Target";
+					}
+				if (Input.GetButton ("MageSkill2")) {
+					Order = "TeleportStone";
+					}
+				if (Input.GetButton ("MageSkill3")) {
+					Order = "Elixer";
+					}
+			}
 		}
 		return Order;
 	}

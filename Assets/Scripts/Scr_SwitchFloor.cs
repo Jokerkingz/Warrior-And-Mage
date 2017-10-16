@@ -18,19 +18,28 @@ public class Scr_SwitchFloor : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	[ContextMenu("LevelFix")]
+	void Fixup () {
+		Vector3 tTemp = vModel.transform.position;
+		tTemp.y = 0;
+		vModel.transform.position = tTemp;
+		vPit.transform.position = tTemp;
 			
 	}
+
+
 	[ContextMenu("Switch This")]
 	public void Activate(){
 		//Debug.Log("Switched");
 			if (!vIsUp){
-				vModel.transform.position = vOrigin;
+			//vModel.transform.position = vOrigin;
+				vModel.SetActive(true);
 				vPit.SetActive(false);
 				vIsUp = true;
 				}
 			else{
-				vModel.transform.position = vGoTo;
+			//vModel.transform.position = vGoTo;
+				vModel.SetActive(false);
 				vPit.SetActive(true);
 				vIsUp = false;
 			}
