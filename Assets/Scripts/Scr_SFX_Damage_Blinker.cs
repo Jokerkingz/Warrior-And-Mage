@@ -6,9 +6,11 @@ public class Scr_SFX_Damage_Blinker : MonoBehaviour {
 	public AnimationCurve vBlinker;
 	public GameObject vModel;
 	public float vBlinkFrame;
+
+	public string owner;
+
 	// Use this for initialization
 	void Start () {
-		
 	}
 	
 	// Update is called once per frame
@@ -24,6 +26,11 @@ public class Scr_SFX_Damage_Blinker : MonoBehaviour {
 				//if (this.tag == "Enemy")
 				//	Destroy (this.gameObject);
 				vBlinkFrame = 0;
+
+				if (owner == "slime") {
+				//GIVE EXPERIENCE HERE, small ammount for slime
+
+				}
 			}
 		}
 	}

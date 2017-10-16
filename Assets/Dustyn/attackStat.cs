@@ -5,8 +5,9 @@ using UnityEngine;
 public class attackStat : MonoBehaviour {
 
 	public statManager sm;
+	public statManagerEnemy sme;
 
-	public int attackPower;
+	//public int attackPower;
 
 	public float minAttack;
 	public float maxAttack;
@@ -14,23 +15,37 @@ public class attackStat : MonoBehaviour {
 
 	public float attackBoost;
 
-	void Start () {
+	public string owner;
+
+	void Start () 
+	{
+	if (owner == "player") {
 		sm = this.gameObject.GetComponent<statManager> ();
+	} else {
+		sme = this.gameObject.GetComponent<statManagerEnemy> ();
 	}
+}
 	
 
 	void Update () {
-		attackPower = sm.attackLvl;
+		//attackPower = sm.attackLvl;
 
 		//TEST ATTACK
-		if (Input.GetKeyDown(KeyCode.End)){
+		/*if (Input.GetKeyDown(KeyCode.End)){
 			Damage = (Mathf.Round(Random.Range (minAttack, maxAttack)));
 
 		Debug.Log (Damage);
-		}
+		}*/
 			
 
 	}
+	public float DamageCalculation()
+	{
+		Damage = (Mathf.Round(Random.Range (minAttack, maxAttack)));
+		Debug.Log (Damage.ToString() + " damage");
+		return Damage;
+	}
+
 
 	public void UpgradeAttack()
 	{

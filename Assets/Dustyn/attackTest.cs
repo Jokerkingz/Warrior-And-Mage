@@ -16,7 +16,7 @@ public class attackTest : MonoBehaviour {
 	void Update () {
 
 		if (Input.GetKeyDown (KeyCode.PageUp)) {
-			player.SendMessage ("Damage", dmg);
+			player.SendMessage ("DamageEquation", dmg);
 		}
 	}
 }

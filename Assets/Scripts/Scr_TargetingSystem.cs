@@ -24,7 +24,18 @@ public class Scr_TargetingSystem : MonoBehaviour {
 		gGlobal = GameObject.FindGameObjectWithTag ("GameController").GetComponent<Scr_Global>();
 
 	}
-	
+
+	void Update(){
+		if (vEnemiesToTarget == "Antagonist") {
+			if (vCurrentTarget == null || gGlobal.vCurrentTurnState != "PlayerInputWait")
+				vTarget.SetActive(false);
+			else 
+				{vTarget.SetActive(true);
+				vTarget.transform.position = Vector3.Scale (vCurrentTarget.transform.position, new Vector3 (1f, 2f, 1f));
+				vTarget.transform.eulerAngles = new Vector3 (0f, vSpinAngle, 0f);}
+			}
+	}
+
 	// Update is called once per frame
 	public void AfterMove() {
 		RecheckForTargets ();
@@ -42,10 +53,10 @@ public class Scr_TargetingSystem : MonoBehaviour {
 				vSpinAngle = gGlobal.Global_MageIconRotationt;
 				break;
 			}
-			if (vCurrentTarget != null) {
-				vTarget.transform.position = Vector3.Scale (vCurrentTarget.transform.position, new Vector3 (1f, 2f, 1f));
-			}
-			vTarget.transform.eulerAngles = new Vector3 (0f, vSpinAngle, 0f);
+			//if (vCurrentTarget != null) {
+			//	vTarget.transform.position = Vector3.Scale (vCurrentTarget.transform.position, new Vector3 (1f, 2f, 1f));
+			//}
+			//vTarget.transform.eulerAngles = new Vector3 (0f, vSpinAngle, 0f);
 		}
 	}
 	public void NextTarget (){

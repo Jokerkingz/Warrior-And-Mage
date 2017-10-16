@@ -1,14 +1,14 @@
 fileFormatVersion: 2
-guid: 68ae4fa6e83869f4195d6eba7b43f522
-timeCreated: 1507619371
+guid: 6b53e8868f704f44495339c8e3762985
+timeCreated: 1507769772
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
   fileIDToRecycleName:
     100000: Cloak
-    100002: Hat
-    100004: Mage
-    100006: //RootNode
+    100002: //RootNode
+    100004: Hat
+    100006: Mage
     100008: mixamorig:Head
     100010: mixamorig:HeadTop_End
     100012: mixamorig:Hips
@@ -51,9 +51,9 @@ ModelImporter:
     100086: mixamorig:Spine1
     100088: mixamorig:Spine2
     400000: Cloak
-    400002: Hat
-    400004: Mage
-    400006: //RootNode
+    400002: //RootNode
+    400004: Hat
+    400006: Mage
     400008: mixamorig:Head
     400010: mixamorig:HeadTop_End
     400012: mixamorig:Hips
@@ -126,7 +126,35 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: mixamo.com
+      takeName: mixamo.com
+      firstFrame: 7
+      lastFrame: 8
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []

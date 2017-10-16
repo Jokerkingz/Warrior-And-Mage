@@ -5,9 +5,10 @@ using UnityEngine;
 public class defenseStat : MonoBehaviour {
 
 	public statManager sm;
+	public statManagerEnemy sme;
 
-	public int defensePower;
-	public int Health;
+	//public int defensePower;
+
 	public float healthToRemove;
 
 	public float minDef;
@@ -16,18 +17,25 @@ public class defenseStat : MonoBehaviour {
 
 	public float defBoost;
 
+
+	public string owner;
+
 	void Start () {
-		sm = this.gameObject.GetComponent<statManager> ();
+		
+		if (owner == "player") {
+			sm = this.gameObject.GetComponent<statManager> ();
+		} else {
+			sme = this.gameObject.GetComponent<statManagerEnemy> ();
+		}
 	}
 
 	void Update () {
 
-		Health = sm.curHealth;
 
-		if (Input.GetKeyDown(KeyCode.Home)){
+		/*if (Input.GetKeyDown(KeyCode.Home)){
 			Protection= (Mathf.Round(Random.Range (minDef, maxDef)));
 			Debug.Log (Protection);
-		}
+		}*/
 	}
 
 	public void UpgradeDefense()
@@ -36,9 +44,24 @@ public class defenseStat : MonoBehaviour {
 		maxDef += defBoost;
 	}
 
-	public void Damage(float dmg)
+
+	public void DamageEquation(float dmg)
 	{
-		dmg -= Protection;
-		dmg -= Health;
+		Protection= (Mathf.Round(Random.Range (minDef, maxDef)));
+		Debug.Log (Protection.ToString() + " protection");
+		healthToRemove = Protection - dmg;
+		if (healthToRemove >= 0) {
+			healthToRemove = -1f;
+		}
+
+		if (owner == "player") {
+			//sm.SendMessage ("Damage", healthToRemove);
+			sm.Damage (healthToRemove);
+		} else {
+			//sme.SendMessage ("Damage", healthToRemove);
+			sme.Damage(healthToRemove);
+		}
+
 	}
+
 }

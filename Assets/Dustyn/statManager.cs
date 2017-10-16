@@ -6,8 +6,8 @@ public class statManager : MonoBehaviour {
 
 	[Header("Stat Ints")]
 
-	public int maxHealth;
-	public int curHealth;
+	public float maxHealth;
+	public float curHealth;
 
 	//NOTE: Spec refers to either Stamina or Mana
 	public int maxSpec;
@@ -16,6 +16,7 @@ public class statManager : MonoBehaviour {
 	public int attackLvl;
 	public int defenseLvl;
 
+	//public float healthToRemove;
 	[Header("Leveling")]
 
 	public int curLvl;
@@ -24,12 +25,13 @@ public class statManager : MonoBehaviour {
 	public int[] toLevelUp;
 	//public int LevelUpCredit;
 
-	[Header("KeyCodes for testing")]
+	/*[Header("KeyCodes for testing")]
 	public KeyCode DrainHealth;
 	public KeyCode ReplenishHealth;
 	public KeyCode DrainSpec;
 	public KeyCode ReplenishSpec;
 	public KeyCode AddXP;
+*/
 
 	[Header("References")]
 	public GameObject healthBar;
@@ -39,6 +41,7 @@ public class statManager : MonoBehaviour {
 	public GameObject LevelUpSystem;
 	public attackStat attStat;
 	public defenseStat defStat;
+	public Scr_CameraLockOn cam;
 
 	void Start () {
 		LevelUpSystem = GameObject.Find("LevelingUpSystem");
@@ -48,15 +51,20 @@ public class statManager : MonoBehaviour {
 	
 		attStat = this.gameObject.GetComponent<attackStat> ();
 		defStat = this.gameObject.GetComponent<defenseStat> ();
+
+		expBar = GameObject.Find ("ExperienceBar");
+		lvlTxt = GameObject.Find("LevelText");
+		cam = GameObject.FindObjectOfType<Scr_CameraLockOn> ();
+	
 	}
 	
 
 	void Update () {
-
+		//healthToRemove = defStat.healthToRemove;
 	
 		// FOR TESTING PURPOSES
 
-		if (Input.GetKeyDown (DrainHealth)) {
+		/*if (Input.GetKeyDown (DrainHealth)) {
 			curHealth -= 10;
 			healthBar.SendMessage ("Appear");
 		}
@@ -77,13 +85,23 @@ public class statManager : MonoBehaviour {
 			curExp += 10;
 			expBar.SendMessage ("Appear");
 		}
-
+*/
 		if (curExp >= toLevelUp [curLvl]) {
 			LevelUp ();
 			lvlTxt.SendMessage ("Appear");
 		}
 
+		if (this.gameObject.name == "Pre_Mage" && curHealth <= 0f) {
+			Debug.Log ("Mage is dead");
+			cam.SendMessage ("MageDead");
+		}
+		if (this.gameObject.name == "Pre_Warrior" && curHealth <= 0f) {
+			Debug.Log ("Warrior is dead");
+			cam.SendMessage ("WarriorDead");
+		}
+
 		Stats ();
+	
 	}
 
 	void Stats ()
@@ -117,10 +135,12 @@ public class statManager : MonoBehaviour {
 	public void HealthLvlUp()
 	{
 		maxHealth += 10;
+		curHealth += 10;
 	}
 	public void SpecialLvlUp()
 	{
 		maxSpec += 5;
+		curSpec += 5;
 	}
 	public void AttackLvlUp()
 	{
@@ -134,4 +154,15 @@ public class statManager : MonoBehaviour {
 		defStat.SendMessage ("UpgradeDefense");
 	}
 
+	/*public void AddExp(float exp)
+	{
+	}*/
+
+
+	public void Damage(float healthToRemove)
+	{
+		curHealth += healthToRemove;
+		healthBar.SendMessage ("Appear");
+
+	}
 }

@@ -1,0 +1,30 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 15.10.2017 18:19:57
+
+newmtl mat3
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5000 0.5000 0.5000
+	Kd 0.9000 0.9000 0.9000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\YungKelz!\Desktop\Warrior-Mage Project\Warrior-And-Mage\Assets\Marc-Élie\Master Hand Crazy Hand\Crazyhand_FingerA.png
+	map_Kd C:\Users\YungKelz!\Desktop\Warrior-Mage Project\Warrior-And-Mage\Assets\Marc-Élie\Master Hand Crazy Hand\Crazyhand_FingerA.png
+
+newmtl mat2
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5000 0.5000 0.5000
+	Kd 0.9000 0.9000 0.9000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\YungKelz!\Desktop\Warrior-Mage Project\Warrior-And-Mage\Assets\Marc-Élie\Master Hand Crazy Hand\Crazyhand_body.png
+	map_Kd C:\Users\YungKelz!\Desktop\Warrior-Mage Project\Warrior-And-Mage\Assets\Marc-Élie\Master Hand Crazy Hand\Crazyhand_body.png
