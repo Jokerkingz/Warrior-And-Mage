@@ -49,7 +49,7 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 			break;
 		case "StartActing":
 			vPrevVect3 = transform.position;
-			Debug.Log(vInputType);
+			//Debug.Log(vInputType);
 			switch (vInputType) {
 			case "MoveUp":
 				vDirection = "North";
@@ -444,7 +444,7 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 		if (cTS.vCurrentTarget != null){
 			vLookDirection = Vector2.Angle(new Vector2(this.transform.position.x,this.transform.position.z),new Vector2(cTS.transform.position.x,cTS.transform.position.z));
 
-			Debug.Log("Created");
+			//Debug.Log("Created");
 			GameObject tObj;
 			Scr_IceSpear tStat;
 			tObj = Instantiate(vProjectile) as GameObject;

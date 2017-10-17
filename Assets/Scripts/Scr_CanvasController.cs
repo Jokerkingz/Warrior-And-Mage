@@ -29,9 +29,12 @@ public class Scr_CanvasController : MonoBehaviour {
 	}
 	public void RegisterButtons(){
 		Debug.Log("Register");
+		Debug.Log(vTextList.GetLength(0));
+		Debug.Log(cG.SkillList.GetLength(0));
 		switch (vState){
 		case "Normal":
 			if (vWarrItem <= 0){
+
 				vTextList[0].text = "Movement";
 				vTextList[1].text = cG.SkillList[0];
 				vTextList[2].text = cG.SkillList[1];
