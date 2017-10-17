@@ -18,7 +18,7 @@ public class statManagerEnemy : MonoBehaviour {
 
 	public attackStat attStat;
 	public defenseStat defStat;
-
+	public death dead;
 
 	void Start () {
 		curHealth = maxHealth;
@@ -26,7 +26,7 @@ public class statManagerEnemy : MonoBehaviour {
 
 		attStat = this.gameObject.GetComponent<attackStat> ();
 		defStat = this.gameObject.GetComponent<defenseStat> ();
-
+		dead = this.gameObject.GetComponent<death> ();
 	}
 
 
@@ -40,7 +40,10 @@ public class statManagerEnemy : MonoBehaviour {
 	{
 		if (curHealth <= 0) {
 			curHealth = 0;
-			this.GetComponent<Scr_SFX_Damage_Blinker> ();
+			//this.GetComponent<Scr_SFX_Damage_Blinker> ();
+			//sfxBlink.Die ();
+			dead.SendMessage("Die");
+
 		}
 		if (curHealth >= maxHealth) {
 			curHealth = maxHealth;
@@ -53,6 +56,6 @@ public class statManagerEnemy : MonoBehaviour {
 	{
 		curHealth += healthToRemove;
 		//healthBar.SendMessage ("Appear");
-		//healthBar.GetComponent<statBarFade> ().Appear ();
+		healthBar.GetComponent<statBarFade> ().Appear ();
 	}
 }

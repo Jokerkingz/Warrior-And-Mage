@@ -10,18 +10,22 @@ public class Scr_SFX_Damage_Blinker : MonoBehaviour {
 	public string owner;
 	public bool vDie;
 
+
+
 	// Use this for initialization
 	void Start () {
+		
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
 		if (vBlinkFrame > 0f) {
 			vBlinkFrame += .05f;
 			if (vBlinker.Evaluate (vBlinkFrame) < 0f)
-				vModel.SetActive(false);
+				vModel.SetActive (false);
 			else
-				vModel.SetActive(true);
+				vModel.SetActive (true);
 				
 			if (vBlinkFrame > 3f) {
 				//if (this.tag == "Enemy")
@@ -31,10 +35,12 @@ public class Scr_SFX_Damage_Blinker : MonoBehaviour {
 				if (owner == "slime") {
 					if (vDie)
 						Destroy (this.gameObject);
-				//GIVE EXPERIENCE HERE, small ammount for slime
-
+					//ADD XP HERE
+					
 				}
 			}
 		}
 	}
 }
+
+
