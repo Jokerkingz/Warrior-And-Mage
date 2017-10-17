@@ -28,9 +28,9 @@ public class Scr_CanvasController : MonoBehaviour {
 			RegisterButtons();
 	}
 	public void RegisterButtons(){
-		Debug.Log("Register");
-		Debug.Log(vTextList.GetLength(0));
-		Debug.Log(cG.SkillList.GetLength(0));
+		//Debug.Log("Register");
+		//Debug.Log(vTextList.GetLength(0));
+		//Debug.Log(cG.SkillList.GetLength(0));
 		switch (vState){
 		case "Normal":
 			if (vWarrItem <= 0){
