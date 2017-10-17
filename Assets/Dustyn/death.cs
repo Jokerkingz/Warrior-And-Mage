@@ -11,6 +11,7 @@ public class death : MonoBehaviour {
 
 	void Start () {
 		expBar = GameObject.Find ("ExperienceBar");
+		addXp = GameObject.FindGameObjectWithTag ("lvlUpSystem").GetComponent<addExperience>();
 
 		if (owner == "slime") {
 			exp = 10f;
