@@ -214,6 +214,10 @@ public class Scr_AntagonistAction : MonoBehaviour {
 				float Damage = this.GetComponent<attackStat> ().DamageCalculation();
 				cTS.vCurrentTarget.GetComponent<defenseStat> ().DamageEquation (Damage);
 
+
+				/// Do Attack 8===D
+				this.GetComponent<Scr_CreateEffect>().Activate(cTS.vCurrentTarget.transform.position);
+
 			}
 		}
 
