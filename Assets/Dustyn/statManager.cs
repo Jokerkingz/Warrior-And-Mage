@@ -167,4 +167,11 @@ public class statManager : MonoBehaviour {
 		healthBar.SendMessage ("Appear");
 
 	}
+
+
+	public void SpecDrain()
+	{
+	curSpec -= 10;
+	specBar.SendMessage ("Appear");
+	}
 }

@@ -380,6 +380,8 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 			float Damage = 3f;//GetComponent<attackStat> ().DamageCalculation();
 			//float Damage = this.GetComponent<attackStat> ().DamageCalculation();
 			cTS.vCurrentTarget.GetComponent<defenseStat> ().DamageEquation (Damage);
+
+		
 		}
 		else if (cTS.vCurrentTarget.tag == "Targetable")
 			cTS.vCurrentTarget.GetComponent<Scr_Switch> ().GetHit();// += .01f;
