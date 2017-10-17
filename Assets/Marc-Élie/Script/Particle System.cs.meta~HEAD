@@ -1,8 +1,14 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Marc-Élie/Script/Particle System.cs.meta
+guid: 942898b5d9d7f3e4080ce7928691a79a
+timeCreated: 1508116627
+=======
 guid: adab374e64d65cd4e82b4282316568fe
 timeCreated: 1508195137
+>>>>>>> master:Assets/Scripts/Scr_IceSpear.cs.meta
 licenseType: Free
 MonoImporter:
+  externalObjects: {}
   serializedVersion: 2
   defaultReferences: []
   executionOrder: 0
