@@ -21,6 +21,7 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 	public GameObject vOtherPartner; // privatable
 	public GameObject vSkillBall;
 	public GameObject vSwipeObject;
+	public GameObject vProjectile;
 	// Note: Do not try Place holder for the protagonist because it WILL know if they will collide, but it will be tougher to calculate when the character is pushed. So Dont add a PlaceHolder object or script.
 
 
@@ -48,6 +49,7 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 			break;
 		case "StartActing":
 			vPrevVect3 = transform.position;
+			//Debug.Log(vInputType);
 			switch (vInputType) {
 			case "MoveUp":
 				vDirection = "North";
@@ -124,6 +126,11 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 				break;
 			case "Bash":
 				BashSpell();
+				tSkilling = true;
+				vNextVect3 = transform.position;
+				break;
+			case "IceSpear":
+				IceSpearSpell();
 				tSkilling = true;
 				vNextVect3 = transform.position;
 				break;
@@ -207,12 +214,17 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 			cRB.isKinematic = false;
 			vAnimationState = "Falling";
 			cAC.Act("Fall",Vector3.zero);
-
 		}
 	}
 	void Falling(){
 		if (vOtherPartner.GetComponent<Scr_ProtagonistAction>().vAnimationState == "Falling")
-			return;
+			FindSpot(vGlobal.vFallCheckPoint);
+		else {if (!FindSpot(vOtherPartner))
+			FindSpot(vGlobal.vFallCheckPoint);
+		}
+			
+		
+			/*
 		Ray tRay;
 		Vector3 tMySpot = vOtherPartner.transform.position;
 		bool tDone = false; {
@@ -270,38 +282,107 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 				cRB.velocity = Vector3.zero;
 				vAnimationState = "Idle";
 				}
+			}*/
+	}
+	bool FindSpot(GameObject tObj){
+		Ray tRay;
+		Vector3 tMySpot = tObj.transform.position;
+		bool tDone = false;
+			{
+			tMySpot.x -= 1f;
+			tMySpot.y += 2f;
+			tRay = new Ray (tMySpot,  new Vector3(0f,-5f,0f));
+			if (!Physics.Raycast (tRay, 5f, lOccupatedCheck)){
+				tMySpot.y -= 2f;
+				transform.position = tMySpot;
+				cRB.useGravity = false;
+				cRB.isKinematic = true;
+				cRB.velocity = Vector3.zero;
+				vAnimationState = "Idle";
+				tDone = true;
 			}
+			tMySpot = tObj.transform.position;
+			}
+		if (!tDone) {
+			tMySpot.z += 1f;
+			tMySpot.y += 2f;
+			tRay = new Ray (tMySpot,  new Vector3(0f,-5f,0f));
+			if (!Physics.Raycast (tRay, 5f, lOccupatedCheck)){
+				tMySpot.y -= 2f;
+				transform.position = tMySpot;
+				cRB.useGravity = false;
+				cRB.isKinematic = true;
+				cRB.velocity = Vector3.zero;
+				vAnimationState = "Idle";
+				tDone = true;
+			}
+			tMySpot = tObj.transform.position;}
+		if (!tDone) {
+			tMySpot.x += 1f;
+			tMySpot.y += 2f;
+			tRay = new Ray (tMySpot,  new Vector3(0f,-5f,0f));
+			if (!Physics.Raycast (tRay, 5f, lOccupatedCheck)){
+				tMySpot.y -= 2f;
+				transform.position = tMySpot;
+				cRB.useGravity = false;
+				cRB.isKinematic = true;
+				cRB.velocity = Vector3.zero;
+				vAnimationState = "Idle";
+				tDone = true;
+				}
+			tMySpot = tObj.transform.position;}
+		if (!tDone){
+			tMySpot.z -= 1f;
+			tMySpot.y += 2f;
+			tRay = new Ray (tMySpot,  new Vector3(0f,-5f,0f));
+			if (!Physics.Raycast (tRay, 5f, lOccupatedCheck)){
+				tMySpot.y -= 2f;
+				transform.position = tMySpot;
+				cRB.useGravity = false;
+				cRB.isKinematic = true;
+				cRB.velocity = Vector3.zero;
+				vAnimationState = "Idle";
+				}
+			}
+		return tDone;
 	}
 	void AttackEnemy(){
 		if (cTS.vCurrentTarget != null) {
-			vLookDirection = Vector2.Angle(new Vector2(this.transform.position.x,this.transform.position.z),new Vector2(cTS.transform.position.x,cTS.transform.position.z));
 			if (Vector3.Distance (this.transform.position, cTS.vCurrentTarget.transform.position) < 1.9f) {
-				//Debug.Log ("I Attacked " + cTS.vCurrentTarget.name);
-				//Temporaryattack = this.GetComponent<AttackScript>().Attackpoints;
-				//cTS.vCurrentTarget.GetComponent<Prameters> ().Damage = Temporaryattack;
-				Vector3 tGoto;
-				tGoto = cTS.vCurrentTarget.transform.position;
-				Vector3 tMyXZ = this.transform.position;
-				float tDifferenceX = tMyXZ.x - tGoto.x;
-				float tDifferenceY = tMyXZ.z - tGoto.z;
-				float tAngle;
-				tAngle = Mathf.Atan2 (tDifferenceX, tDifferenceY) * 180 / Mathf.PI;
-				tMyXZ.x -= tDifferenceX / 2f;
-				tMyXZ.y = 1.5f;
-				tMyXZ.z -= tDifferenceY / 2f;
-				GameObject tTemp = Instantiate (vSwipeObject) as GameObject;
-				tTemp.transform.position = tMyXZ;
-				tTemp.GetComponent<Scr_SwipeEffect> ().vFacingDirection = tAngle;
-				cAC.Act ("Idle", Vector3.Normalize (new Vector3 (-tDifferenceX, 0f, -tDifferenceY)));
-				if (cTS.vCurrentTarget.tag == "Enemy") {
-					cTS.vCurrentTarget.GetComponent<Scr_SFX_Damage_Blinker> ().vBlinkFrame += .01f;
-					float Damage = this.GetComponent<attackStat> ().DamageCalculation();
-					cTS.vCurrentTarget.GetComponent<defenseStat> ().DamageEquation (Damage);
-				}
-				else if (cTS.vCurrentTarget.tag == "Targetable")
-					cTS.vCurrentTarget.GetComponent<Scr_Switch> ().GetHit();// += .01f;
+				
+				DoAttack();
 			}
+			else {cTS.vCurrentTarget = cTS.NearestTarget();
+				if (Vector3.Distance (this.transform.position, cTS.vCurrentTarget.transform.position) < 1.9f)
+					DoAttack();
+			}
+			vLookDirection = Vector2.Angle(new Vector2(this.transform.position.x,this.transform.position.z),new Vector2(cTS.transform.position.x,cTS.transform.position.z));
 		}
+	}
+	void DoAttack(){
+		vLookDirection = Vector2.Angle(new Vector2(this.transform.position.x,this.transform.position.z),new Vector2(cTS.transform.position.x,cTS.transform.position.z));
+		Vector3 tGoto;
+		tGoto = cTS.vCurrentTarget.transform.position;
+		Vector3 tMyXZ = this.transform.position;
+		float tDifferenceX = tMyXZ.x - tGoto.x;
+		float tDifferenceY = tMyXZ.z - tGoto.z;
+		float tAngle;
+		tAngle = Mathf.Atan2 (tDifferenceX, tDifferenceY) * 180 / Mathf.PI;
+		tMyXZ.x -= tDifferenceX / 2f;
+		tMyXZ.y = 1.5f;
+		tMyXZ.z -= tDifferenceY / 2f;
+		GameObject tTemp = Instantiate (vSwipeObject) as GameObject;
+		tTemp.transform.position = tMyXZ;
+		tTemp.GetComponent<Scr_SwipeEffect> ().vFacingDirection = tAngle;
+		cAC.Act ("Swing", Vector3.Normalize (new Vector3 (-tDifferenceX, 0f, -tDifferenceY)));
+		if (cTS.vCurrentTarget.tag == "Enemy") {
+			cTS.vCurrentTarget.GetComponent<Scr_SFX_Damage_Blinker> ().vBlinkFrame += .01f;
+			float Damage = 3f;//GetComponent<attackStat> ().DamageCalculation();
+			//float Damage = this.GetComponent<attackStat> ().DamageCalculation();
+			cTS.vCurrentTarget.GetComponent<defenseStat> ().DamageEquation (Damage);
+		}
+		else if (cTS.vCurrentTarget.tag == "Targetable")
+			cTS.vCurrentTarget.GetComponent<Scr_Switch> ().GetHit();// += .01f;
 	}
 
 	Vector3 DirectionToPoint(string tDirection,int tMultiplier){
@@ -340,6 +421,7 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 	/// Skill List ///
 	void SkillSort(string tWhichSkill){
 	}
+
 	void BashSpell(){
 		GameObject tObj;
 		Scr_SkillBall tStat;
@@ -357,5 +439,35 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 		tStat = tObj.GetComponent<Scr_SkillBall>();
 		tStat.vSkillType = "Push";
 		cAC.Act("Spell3",Vector3.zero);
+	}
+	void IceSpearSpell(){
+		if (cTS.vCurrentTarget != null){
+			vLookDirection = Vector2.Angle(new Vector2(this.transform.position.x,this.transform.position.z),new Vector2(cTS.transform.position.x,cTS.transform.position.z));
+
+			//Debug.Log("Created");
+			GameObject tObj;
+			Scr_IceSpear tStat;
+			tObj = Instantiate(vProjectile) as GameObject;
+			tObj.transform.position = transform.position;
+			tStat = tObj.GetComponent<Scr_IceSpear>();
+			tStat.vTarget = cTS.vCurrentTarget.gameObject;
+
+			tStat.vCarriedValue = 3;
+
+
+			Vector3 tGoto;
+			tGoto = cTS.vCurrentTarget.transform.position;
+			Vector3 tMyXZ = this.transform.position;
+			float tDifferenceX = tMyXZ.x - tGoto.x;
+			float tDifferenceY = tMyXZ.z - tGoto.z;
+			float tAngle;
+			tAngle = Mathf.Atan2 (tDifferenceX, tDifferenceY) * 180 / Mathf.PI;
+			tMyXZ.x -= tDifferenceX / 2f;
+			tMyXZ.y = 1.5f;
+			tMyXZ.z -= tDifferenceY / 2f;
+
+			//tStat.vCarriedValue = this.GetComponent<attackStat> ().DamageCalculation();
+			cAC.Act("Spell1",Vector3.Normalize (new Vector3 (-tDifferenceX, 0f, -tDifferenceY)));
+		}
 	}
 }

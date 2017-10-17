@@ -8,6 +8,7 @@ public class Scr_SFX_Damage_Blinker : MonoBehaviour {
 	public float vBlinkFrame;
 
 	public string owner;
+	public bool vDie;
 
 	// Use this for initialization
 	void Start () {
@@ -18,9 +19,9 @@ public class Scr_SFX_Damage_Blinker : MonoBehaviour {
 		if (vBlinkFrame > 0f) {
 			vBlinkFrame += .05f;
 			if (vBlinker.Evaluate (vBlinkFrame) < 0f)
-				vModel.GetComponent<MeshRenderer> ().enabled = false;
+				vModel.SetActive(false);
 			else
-				vModel.GetComponent<MeshRenderer> ().enabled = true;
+				vModel.SetActive(true);
 				
 			if (vBlinkFrame > 3f) {
 				//if (this.tag == "Enemy")
@@ -28,6 +29,8 @@ public class Scr_SFX_Damage_Blinker : MonoBehaviour {
 				vBlinkFrame = 0;
 
 				if (owner == "slime") {
+					if (vDie)
+						Destroy (this.gameObject);
 				//GIVE EXPERIENCE HERE, small ammount for slime
 
 				}

@@ -11,6 +11,7 @@ public class Scr_Global : MonoBehaviour {
 	private Scr_ProtagonistAction cWPA;
 	private GameObject Object_Mage;
 	private Scr_ProtagonistAction cMPA;
+	public Scr_CanvasController cCn;
 	public GameObject Object_Orc;
 	public float TurnCoolDown;
 	private float LerpFrame;
@@ -20,6 +21,9 @@ public class Scr_Global : MonoBehaviour {
 	private Transform Mage_Next;
 	private Transform Enemy_Previous;
 	private Transform Enemy_Next;
+	private float tTimerA;
+	private float tTimerB;
+	public GameObject vFallCheckPoint;
 
 	public string SubStatus; // Paused, options, shop, Item, Play
 	public string[] SkillList;
@@ -64,11 +68,18 @@ public class Scr_Global : MonoBehaviour {
 		SubStatus = "Play";
 		Global_WarriorItem = 0f;
 		Global_MageItem = 180f;
-		SkillList = new string[8]{"BasicAttack","Bash","Roar","Swing","BasicAttack","Push","Ice Spear","Block"};
+		SkillList = new string[8]{"BasicAttack","","","","BasicAttack","","",""};
+		//SkillList = new string[8]{"BasicAttack","Bash","Roar","Swing","BasicAttack","Push","IceSpear","Block"};
 		vNextTurn = "Player";
 	}
 
 	void Update () {
+		tTimerA -= Time.deltaTime;
+		tTimerB -= Time.deltaTime;
+		if (tTimerA < 0f)
+			tTimerA = 0;
+		if (tTimerB < 0f)
+			tTimerB = 0;
 		GameObject[] Those;
 		/// Target Spinner
 		Global_WarriorIconRotation += Time.deltaTime*45f;
@@ -86,8 +97,9 @@ public class Scr_Global : MonoBehaviour {
 						}
 				Object_Warrior.GetComponent<Scr_TargetingSystem>().AfterMove();
 				Object_Mage.GetComponent<Scr_TargetingSystem>().AfterMove();
-				if (Is_Everyone_Idle())
+				if (Is_Everyone_Idle()){
 					InputCheck ();
+					}
 			break;
 			case "PlayerStartAnimate":
 				Global_AnimationFrame = 0f;
@@ -202,7 +214,6 @@ public class Scr_Global : MonoBehaviour {
 	void InputCheck(){
 		string WarriorOrder = WarriorInput();
 		string MageOrder = MageInput();
-
 		if (WarriorOrder != "None" && MageOrder != "None") { // Both have an action
 
 			cWPA.vAnimationState = "StartActing";
@@ -246,15 +257,21 @@ public class Scr_Global : MonoBehaviour {
 			}
 			if (Input.GetAxis ("WarriorWait") > 0f || Input.GetButton ("WarriorWait"))
 				Order = "Wait";
-		} else {
+		} else if (Input.GetButton ("WarriorItem"))
+		 	{cCn.vWarrItem += 1f;
 			if (Input.GetAxis ("WarriorAttack") < 0f || Input.GetButton ("WarriorAttack")) {
-				Order = "BasicAttack";
+				Order = "HealthPotion";
 			}
-			if (Input.GetAxis ("WarriorSkill1") < 0f || Input.GetButton ("WarriorSkill1")) {
-				Order = "Break";
+			if ((Input.GetAxis ("WarriorSkill1") < 0f || Input.GetButton ("WarriorSkill1")) && tTimerA == 0f) {
+				tTimerA = .5f;
+				Order = "Next Target";
+				Object_Warrior.GetComponent<Scr_TargetingSystem>().NextTarget();
 			}
-			if (Input.GetAxis ("WarriorSkill1") < 0f || Input.GetButton ("WarriorSkill1")) {
-				Order = "Break";
+			if (Input.GetAxis ("WarriorSkill2") < 0f || Input.GetButton ("WarriorSkill2")) {
+				Order = "TeleportStone";
+			}
+			if (Input.GetAxis ("WarriorSkill2") < 0f || Input.GetButton ("WarriorSkill2")) {
+				Order = "Elixer";
 			}
 		}
 		return Order;
@@ -288,6 +305,24 @@ public class Scr_Global : MonoBehaviour {
 			}
 			if (Input.GetAxis ("MageWait") > 0f || Input.GetButton ("MageWait"))
 				Order = "Wait";
+				}
+			else if (Input.GetButton ("MageItem")){
+				{cCn.vMageItem += 1f;
+				if (Input.GetButton ("MageAttack")) {
+					Order = "HealthPotion";
+					}
+				if (Input.GetButton ("MageSkill1") && tTimerB == 0f) {
+					tTimerB = .5f;
+					Order = "Next Target";
+					Object_Mage.GetComponent<Scr_TargetingSystem>().NextTarget();
+					}
+				if (Input.GetButton ("MageSkill2")) {
+					Order = "TeleportStone";
+					}
+				if (Input.GetButton ("MageSkill3")) {
+					Order = "Elixer";
+					}
+			}
 		}
 		return Order;
 	}

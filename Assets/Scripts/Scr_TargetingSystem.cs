@@ -26,6 +26,11 @@ public class Scr_TargetingSystem : MonoBehaviour {
 	}
 
 	void Update(){
+	}
+
+	// Update is called once per frame
+	public void AfterMove() {
+
 		if (vEnemiesToTarget == "Antagonist") {
 			if (vCurrentTarget == null || gGlobal.vCurrentTurnState != "PlayerInputWait")
 				vTarget.SetActive(false);
@@ -34,10 +39,8 @@ public class Scr_TargetingSystem : MonoBehaviour {
 				vTarget.transform.position = Vector3.Scale (vCurrentTarget.transform.position, new Vector3 (1f, 2f, 1f));
 				vTarget.transform.eulerAngles = new Vector3 (0f, vSpinAngle, 0f);}
 			}
-	}
 
-	// Update is called once per frame
-	public void AfterMove() {
+
 		RecheckForTargets ();
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			NextTarget ();
