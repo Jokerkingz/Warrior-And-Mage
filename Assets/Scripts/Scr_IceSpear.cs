@@ -36,7 +36,6 @@ public class Scr_IceSpear : MonoBehaviour {
 		}
 		else if (vTarget.tag == "Targetable")
 			vTarget.GetComponent<Scr_Switch> ().GetHit();
-		GetComponent<ParticleSystem>().Stop();
 		GetComponentInChildren<MeshRenderer>().enabled = false;
 		GetComponentInChildren<MeshRenderer>().gameObject.tag ="Untagged";
 		Invoke("Die",2f);
