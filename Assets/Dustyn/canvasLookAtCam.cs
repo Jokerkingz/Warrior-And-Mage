@@ -9,7 +9,7 @@ public class canvasLookAtCam : MonoBehaviour {
 	public Transform target;
 
 	void Start () {
-		
+		//target= GameObject.FindObjectOfType<Scr_CameraLockOn> ();
 	}
 
 	void Update () {

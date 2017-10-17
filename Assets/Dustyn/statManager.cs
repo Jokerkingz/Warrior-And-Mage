@@ -43,6 +43,7 @@ public class statManager : MonoBehaviour {
 	public attackStat attStat;
 	public defenseStat defStat;
 	public Scr_CameraLockOn cam;
+	public blackScreen blkScreen;
 
 
 	void Start () {
@@ -57,7 +58,7 @@ public class statManager : MonoBehaviour {
 		expBar = GameObject.Find ("ExperienceBar");
 		lvlTxt = GameObject.Find("LevelText");
 		cam = GameObject.FindObjectOfType<Scr_CameraLockOn> ();
-	
+		blkScreen = GameObject.FindObjectOfType<blackScreen> ();
 	}
 	
 
@@ -110,6 +111,7 @@ public class statManager : MonoBehaviour {
 	{
 		if (curHealth <= 0) {
 			curHealth = 0;
+			blkScreen.active = false;
 		}
 		if (curHealth >= maxHealth) {
 			curHealth = maxHealth;
