@@ -10,6 +10,10 @@ public class Scr_SFX_Damage_Blinker : MonoBehaviour {
 	public string owner;
 	public bool vDie;
 
+	//DUSTYN XP
+	public addExperience addXp;
+	public float exp; 
+
 	// Use this for initialization
 	void Start () {
 	}
@@ -31,8 +35,8 @@ public class Scr_SFX_Damage_Blinker : MonoBehaviour {
 				if (owner == "slime") {
 					if (vDie)
 						Destroy (this.gameObject);
-				//GIVE EXPERIENCE HERE, small ammount for slime
-
+					exp=10f;
+					addXp.AddExp(exp);
 				}
 			}
 		}

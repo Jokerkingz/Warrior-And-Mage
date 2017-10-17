@@ -16,7 +16,8 @@ public class statManager : MonoBehaviour {
 	public int attackLvl;
 	public int defenseLvl;
 
-	//public float healthToRemove;
+
+	/*//public float healthToRemove;
 	[Header("Leveling")]
 
 	public int curLvl;
@@ -24,7 +25,7 @@ public class statManager : MonoBehaviour {
 	public int nextLvl;
 	public int[] toLevelUp;
 	//public int LevelUpCredit;
-
+*/
 	/*[Header("KeyCodes for testing")]
 	public KeyCode DrainHealth;
 	public KeyCode ReplenishHealth;
@@ -43,11 +44,12 @@ public class statManager : MonoBehaviour {
 	public defenseStat defStat;
 	public Scr_CameraLockOn cam;
 
+
 	void Start () {
 		LevelUpSystem = GameObject.Find("LevelingUpSystem");
 		curHealth = maxHealth;
 		curSpec = maxSpec;
-		curExp = 0;
+		//curExp = 0;
 	
 		attStat = this.gameObject.GetComponent<attackStat> ();
 		defStat = this.gameObject.GetComponent<defenseStat> ();
@@ -86,10 +88,10 @@ public class statManager : MonoBehaviour {
 			expBar.SendMessage ("Appear");
 		}
 */
-		if (curExp >= toLevelUp [curLvl]) {
+		/*if (curExp >= toLevelUp [curLvl]) {
 			LevelUp ();
 			lvlTxt.SendMessage ("Appear");
-		}
+		}*/
 
 		if (this.gameObject.name == "Pre_Mage" && curHealth <= 0f) {
 			Debug.Log ("Mage is dead");
@@ -120,17 +122,17 @@ public class statManager : MonoBehaviour {
 			curSpec = maxSpec;
 		}
 			
-		nextLvl= toLevelUp[curLvl];
+		//nextLvl= toLevelUp[curLvl];
 
 	}
 
-	void LevelUp()
+	/*void LevelUp()
 	{
 		curLvl++;
 		if (curLvl > 1) {
 			LevelUpSystem.SendMessage ("AddCredits");
 		}
-	}
+	}*/
 
 	public void HealthLvlUp()
 	{

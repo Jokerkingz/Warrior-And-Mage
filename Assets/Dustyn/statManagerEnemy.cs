@@ -53,6 +53,6 @@ public class statManagerEnemy : MonoBehaviour {
 	{
 		curHealth += healthToRemove;
 		//healthBar.SendMessage ("Appear");
-		//healthBar.GetComponent<statBarFade> ().Appear ();
+		healthBar.GetComponent<statBarFade> ().Appear ();
 	}
 }
