@@ -1,0 +1,134 @@
+fileFormatVersion: 2
+guid: 9dfa28e9457529846bed85732622fc28
+timeCreated: 1507857389
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Boothelmet
+    100002: Cape
+    100004: Character
+    100006: Cone002
+    100008: EyeBallL
+    100010: EyeBallR
+    100012: eyel
+    100014: eyer
+    100016: HEAD HELMEt
+    100018: JackHekmet
+    100020: Leg Strap
+    100022: //RootNode
+    400000: Boothelmet
+    400002: Cape
+    400004: Character
+    400006: Cone002
+    400008: EyeBallL
+    400010: EyeBallR
+    400012: eyel
+    400014: eyer
+    400016: HEAD HELMEt
+    400018: JackHekmet
+    400020: Leg Strap
+    400022: //RootNode
+    2300000: Boothelmet
+    2300002: Cape
+    2300004: Character
+    2300006: Cone002
+    2300008: EyeBallL
+    2300010: EyeBallR
+    2300012: eyel
+    2300014: eyer
+    2300016: HEAD HELMEt
+    2300018: JackHekmet
+    2300020: Leg Strap
+    3300000: Boothelmet
+    3300002: Cape
+    3300004: Character
+    3300006: Cone002
+    3300008: EyeBallL
+    3300010: EyeBallR
+    3300012: eyel
+    3300014: eyer
+    3300016: HEAD HELMEt
+    3300018: JackHekmet
+    3300020: Leg Strap
+    4300000: Character
+    4300002: Leg Strap
+    4300004: Boothelmet
+    4300006: JackHekmet
+    4300008: Cape
+    4300010: EyeBallL
+    4300012: EyeBallR
+    4300014: Cone002
+    4300016: eyer
+    4300018: eyel
+    4300020: HEAD HELMEt
+    7400000: Take 001
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

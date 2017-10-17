@@ -1,0 +1,146 @@
+fileFormatVersion: 2
+guid: cdc4851e7aa979d4a8af8f7ca07c8c04
+timeCreated: 1507857392
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Boothelmet
+    100002: Box001
+    100004: Cape
+    100006: Character
+    100008: Cone002
+    100010: EyeBallL
+    100012: EyeBallR
+    100014: eyel
+    100016: eyer
+    100018: HEAD HELMEt
+    100020: JackHekmet
+    100022: Leg Strap
+    100024: Plane001
+    100026: Shield
+    100028: //RootNode
+    400000: Boothelmet
+    400002: Box001
+    400004: Cape
+    400006: Character
+    400008: Cone002
+    400010: EyeBallL
+    400012: EyeBallR
+    400014: eyel
+    400016: eyer
+    400018: HEAD HELMEt
+    400020: JackHekmet
+    400022: Leg Strap
+    400024: Plane001
+    400026: Shield
+    400028: //RootNode
+    2300000: Boothelmet
+    2300002: Box001
+    2300004: Cape
+    2300006: Character
+    2300008: Cone002
+    2300010: EyeBallL
+    2300012: EyeBallR
+    2300014: eyel
+    2300016: eyer
+    2300018: HEAD HELMEt
+    2300020: JackHekmet
+    2300022: Leg Strap
+    2300024: Shield
+    3300000: Boothelmet
+    3300002: Box001
+    3300004: Cape
+    3300006: Character
+    3300008: Cone002
+    3300010: EyeBallL
+    3300012: EyeBallR
+    3300014: eyel
+    3300016: eyer
+    3300018: HEAD HELMEt
+    3300020: JackHekmet
+    3300022: Leg Strap
+    3300024: Shield
+    4300000: Character
+    4300002: Leg Strap
+    4300004: Boothelmet
+    4300006: JackHekmet
+    4300008: Cape
+    4300010: EyeBallL
+    4300012: EyeBallR
+    4300014: Cone002
+    4300016: eyer
+    4300018: eyel
+    4300020: HEAD HELMEt
+    4300022: Box001
+    4300024: Shield
+    7400000: Take 001
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
