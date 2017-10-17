@@ -284,7 +284,7 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 				}
 			}*/
 	}
-	bool FindSpot(GameObject tObj){
+	public bool FindSpot(GameObject tObj){
 		Ray tRay;
 		Vector3 tMySpot = tObj.transform.position;
 		bool tDone = false;

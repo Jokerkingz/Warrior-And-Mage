@@ -327,7 +327,10 @@ public class Scr_Global : MonoBehaviour {
 		return Order;
 	}
 
-
+	void Revive(){
+		Object_Warrior.GetComponent<Scr_ProtagonistAction>().FindSpot(vFallCheckPoint);
+		Object_Mage.GetComponent<Scr_ProtagonistAction>().FindSpot(vFallCheckPoint);
+	}
 
 
 	bool Is_Everyone_Idle(){
