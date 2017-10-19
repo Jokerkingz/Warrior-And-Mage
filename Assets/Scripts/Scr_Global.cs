@@ -24,6 +24,7 @@ public class Scr_Global : MonoBehaviour {
 	private float tTimerA;
 	private float tTimerB;
 	public GameObject vFallCheckPoint;
+	private LineRenderer cLR;
 
 	public string SubStatus; // Paused, options, shop, Item, Play
 	public string[] SkillList;
@@ -61,6 +62,7 @@ public class Scr_Global : MonoBehaviour {
 		cWPA = Object_Warrior.GetComponent<Scr_ProtagonistAction>();
 		Object_Mage = GameObject.FindGameObjectWithTag ("Mage");
 		cMPA = Object_Mage.GetComponent<Scr_ProtagonistAction>();
+		cLR = this.GetComponent<LineRenderer>();
 		TurnCoolDown = 0;
 
 		Global_AnimationState = "EndAnimate";
@@ -68,12 +70,13 @@ public class Scr_Global : MonoBehaviour {
 		SubStatus = "Play";
 		Global_WarriorItem = 0f;
 		Global_MageItem = 180f;
-		SkillList = new string[8]{"BasicAttack","","","","BasicAttack","","",""};
+		SkillList = new string[8]{"Basic Attack","","","","Basic Attack","","",""};
 		//SkillList = new string[8]{"BasicAttack","Bash","Roar","Swing","BasicAttack","Push","IceSpear","Block"};
 		vNextTurn = "Player";
 	}
 
 	void Update () {
+		LineControl();
 		tTimerA -= Time.deltaTime;
 		tTimerB -= Time.deltaTime;
 		if (tTimerA < 0f)
@@ -357,5 +360,14 @@ public class Scr_Global : MonoBehaviour {
 		}
 		vDebugIsEveryoneIdle = tEveryoneisIdle;
 		return tEveryoneisIdle;
+	}
+	void LineControl(){
+		float tDistance = Vector3.Distance(Object_Warrior.transform.position,Object_Mage.transform.position);
+		cLR.SetPosition(0,Object_Warrior.transform.position);
+		cLR.SetPosition(1,Object_Mage.transform.position);
+		if (tDistance >= 5f)
+			cLR.enabled = true;
+		else
+			cLR.enabled = false;
 	}
 }

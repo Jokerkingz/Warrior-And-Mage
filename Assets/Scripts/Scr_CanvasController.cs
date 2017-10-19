@@ -36,7 +36,7 @@ public class Scr_CanvasController : MonoBehaviour {
 			if (vWarrItem <= 0){
 
 				vTextList[0].text = "Movement";
-				//vTextList[1].text = cG.SkillList[0];
+				vTextList[1].text = cG.SkillList[0];
 				vTextList[2].text = cG.SkillList[1];
 				vTextList[3].text = cG.SkillList[2];
 				vTextList[4].text = cG.SkillList[3];

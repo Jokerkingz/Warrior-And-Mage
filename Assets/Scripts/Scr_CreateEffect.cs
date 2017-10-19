@@ -3,15 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Scr_CreateEffect : MonoBehaviour {
-	public GameObject vSpark;
+	public GameObject[] vSpecialE;
 
-	void Update(){
-		//if (Input.GetKeyDown("Space"))
-		//	Activate(Vector3.zero);
-	}
-
-	public void Activate(Vector3 tTargetSpot){
-		GameObject Temp = Instantiate(vSpark) as GameObject;
+	public void Activate(Vector3 tTargetSpot, int tWhich){
+		GameObject Temp = Instantiate(vSpecialE[tWhich]) as GameObject;
 		Temp.transform.position = tTargetSpot;
 	}
 }

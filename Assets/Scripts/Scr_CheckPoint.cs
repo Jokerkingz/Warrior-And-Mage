@@ -11,7 +11,6 @@ public class Scr_CheckPoint : MonoBehaviour {
 	}
 	void OnTriggerEnter(Collider tOther){
 		if (tOther.tag == "Warrior" || tOther.tag == "Mage"){
-			Debug.Log("New Checkpoint");
 			cG.vFallCheckPoint = vOwner.gameObject;
 		}
 	}

@@ -60,9 +60,11 @@ public class Scr_AIControl : MonoBehaviour {
 				//cTS.vCurrentTarget = vObjWarrior.gameObject;
 				vChaseLocation = cTS.vCurrentTarget.transform.position;
 				AttackSomeone ();
-				Debug.Log ("Attack"); }
+				//Debug.Log ("Attack"); 
+				}
 			else{ WalkToward ();
-				Debug.Log ("WalkToward"); }
+				//Debug.Log ("WalkToward"); 
+				}
 			return;
 			}
 		else

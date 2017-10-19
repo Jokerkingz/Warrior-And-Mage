@@ -5,6 +5,7 @@ using UnityEngine;
 public class Scr_AntagonistAction : MonoBehaviour {
 	public Vector3 vPrevVect3;
 	public Vector3 vNextVect3;
+	public string vOwner = "Slime";
 	public string vAnimationState;
 	public float vAnimationFrame;
 	public string vInputType;
@@ -209,14 +210,15 @@ public class Scr_AntagonistAction : MonoBehaviour {
 		if (cTS.vCurrentTarget != null) {
 			vLookDirection = Vector2.Angle(new Vector2(this.transform.position.x,this.transform.position.z),new Vector2(cTS.transform.position.x,cTS.transform.position.z));
 			if (Vector3.Distance (this.transform.position, cTS.transform.position) < 2f) {
-				Debug.Log ("I Attacked " + cTS.vCurrentTarget.name);
+				//Debug.Log ("I Attacked " + cTS.vCurrentTarget.name);
 				cTS.vCurrentTarget.GetComponent<Scr_SFX_Damage_Blinker> ().vBlinkFrame += .01f;
 				float Damage = this.GetComponent<attackStat> ().DamageCalculation();
 				cTS.vCurrentTarget.GetComponent<defenseStat> ().DamageEquation (Damage);
 
 
 				/// Do Attack 8===D
-				this.GetComponent<Scr_CreateEffect>().Activate(cTS.vCurrentTarget.transform.position);
+				if (vOwner == "Slime")
+				this.GetComponent<Scr_CreateEffect>().Activate(cTS.vCurrentTarget.transform.position,0);
 
 			}
 		}

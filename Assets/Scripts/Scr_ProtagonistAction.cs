@@ -10,6 +10,7 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 	public string vInputType;
 	public AnimationCurve vBounce;
 	public Scr_Global vGlobal;
+	private Scr_CreateEffect cCE;
 	private Scr_AnimationControl cAC;
 	private Rigidbody cRB;
 	public string vDirection;
@@ -35,6 +36,7 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 		cRB = this.GetComponent<Rigidbody>();
 		cTS = this.GetComponent<Scr_TargetingSystem>();
 		cAC = this.GetComponent<Scr_AnimationControl>();
+		cCE = this.GetComponent<Scr_CreateEffect>();
 		if (this.tag=="Mage")
 			vOtherPartner = GameObject.FindGameObjectWithTag("Warrior");
 		else  if (this.tag == "Warrior")
@@ -43,6 +45,8 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		
+			
 		bool tSkilling = false;
 		switch (vAnimationState) {
 		case "Idle":
@@ -112,7 +116,7 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 				cAC.Act("Idle",DirectionToPoint(vDirection,1));
 				break;
 
-			case "BasicAttack":
+			case "Basic Attack":
 				vNextVect3 = transform.position;
 				AttackEnemy ();
 				break;
@@ -150,6 +154,7 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 			if (vGlobal.vCurrentTurnState == "PlayerEndAnimate") {
 				vAnimationFrame = 0f;
 				vAnimationState = "Idle";
+
 				PitFallCheck();
 				vInputType = "Wait";
 				transform.position = Vector3.Lerp (vPrevVect3, vNextVect3, 1f);
@@ -169,6 +174,7 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 			if (vAnimationFrame < 0f) {
 				vAnimationFrame = 0f;
 				vAnimationState = "Idle";
+
 				PitFallCheck();
 				vInputType = "Wait";
 				transform.position = Vector3.Lerp (vPrevVect3, vNextVect3, 0f);
@@ -215,15 +221,22 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 			vAnimationState = "Falling";
 			cAC.Act("Fall",Vector3.zero);
 		}
+		else if (Vector3.Distance(this.transform.position,vOtherPartner.transform.position) > 7f)
+			Falling();
 	}
 	void Falling(){
-		if (vOtherPartner.GetComponent<Scr_ProtagonistAction>().vAnimationState == "Falling")
-			FindSpot(vGlobal.vFallCheckPoint);
-		else {if (!FindSpot(vOtherPartner))
-			FindSpot(vGlobal.vFallCheckPoint);
+		if (!FindSpot(vGlobal.vFallCheckPoint))
+			{if (vOtherPartner.GetComponent<Scr_ProtagonistAction>().vAnimationState == "Falling")
+				FindSpot(vGlobal.vFallCheckPoint);
+			else {if (!FindSpot(vOtherPartner))
+				FindSpot(vGlobal.vFallCheckPoint);
+			}
 		}
-			
-		
+		if (Vector3.Distance(this.transform.position,vOtherPartner.transform.position) > 6f){
+			vOtherPartner.GetComponent<Scr_ProtagonistAction>().FindSpot(vGlobal.vFallCheckPoint);
+			//FindSpot(vGlobal.vFallCheckPoint);
+
+		}
 			/*
 		Ray tRay;
 		Vector3 tMySpot = vOtherPartner.transform.position;
@@ -431,6 +444,7 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 		tObj.transform.position = transform.position;
 		tStat = tObj.GetComponent<Scr_SkillBall>();
 		tStat.vSkillType = "Bash";
+		this.GetComponent<Scr_CreateEffect>().Activate(this.transform.position,0);
 		}
 
 	void PushSpell(){
@@ -441,12 +455,15 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 		tStat = tObj.GetComponent<Scr_SkillBall>();
 		tStat.vSkillType = "Push";
 		cAC.Act("Spell3",Vector3.zero);
+		Vector3 tTemp = this.transform.position;
+		tTemp.y += 2f;
+		this.GetComponent<Scr_CreateEffect>().Activate(tTemp,0);
 	}
 	void IceSpearSpell(){
 		if (cTS.vCurrentTarget != null){
 			vLookDirection = Vector2.Angle(new Vector2(this.transform.position.x,this.transform.position.z),new Vector2(cTS.transform.position.x,cTS.transform.position.z));
 
-			//Debug.Log("Created");
+			Debug.Log("Created");
 			GameObject tObj;
 			Scr_IceSpear tStat;
 			tObj = Instantiate(vProjectile) as GameObject;

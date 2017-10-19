@@ -22,7 +22,14 @@ public class Scr_IceSpear : MonoBehaviour {
 		transform.Translate(Vector3.forward*4f*Time.deltaTime,Space.Self);
 		tTemp = Vector3.Distance(transform.position,vTargetSpot);
 		if (tTemp<.5f && !vDone){
-			TurnOff();
+			if (vTarget!= null)
+				TurnOff();
+			else {
+				GetComponentInChildren<MeshRenderer>().enabled = false;
+				GetComponentInChildren<MeshRenderer>().gameObject.tag ="Untagged";
+				Invoke("Die",2f);
+				tag = "Untagged";
+			}
 			}
 	}
 	void TurnOff(){
