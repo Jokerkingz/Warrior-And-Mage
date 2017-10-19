@@ -122,20 +122,33 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 				break;
 			case "Wait":
 				vNextVect3 = transform.position;
+				this.GetComponent<statManager>().SpecRegen(4);
 				break;
 			case "Push":
-				PushSpell();
-				tSkilling = true;
+				if (this.GetComponent<statManager>().curSpec >= 20){
+					this.GetComponent<statManager>().SpecDrain(20);
+					PushSpell();
+					tSkilling = true;
+				} else 
+				this.GetComponent<statManager>().SpecRegen(1);
 				vNextVect3 = transform.position;
 				break;
 			case "Bash":
-				BashSpell();
-				tSkilling = true;
+				if (this.GetComponent<statManager>().curSpec >= 15){
+					this.GetComponent<statManager>().SpecDrain(15);
+					BashSpell();
+					tSkilling = true;
+				} else 
+				this.GetComponent<statManager>().SpecRegen(1);
 				vNextVect3 = transform.position;
 				break;
-			case "IceSpear":
-				IceSpearSpell();
-				tSkilling = true;
+			case "Ice Spear":
+				if (this.GetComponent<statManager>().curSpec >= 30){
+					this.GetComponent<statManager>().SpecDrain(30);
+					IceSpearSpell();
+					tSkilling = true;
+				} else 
+				this.GetComponent<statManager>().SpecRegen(2);
 				vNextVect3 = transform.position;
 				break;
 			}
@@ -390,8 +403,8 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 		cAC.Act ("Swing", Vector3.Normalize (new Vector3 (-tDifferenceX, 0f, -tDifferenceY)));
 		if (cTS.vCurrentTarget.tag == "Enemy") {
 			cTS.vCurrentTarget.GetComponent<Scr_SFX_Damage_Blinker> ().vBlinkFrame += .01f;
-			float Damage = 3f;//GetComponent<attackStat> ().DamageCalculation();
-			//float Damage = this.GetComponent<attackStat> ().DamageCalculation();
+			//float Damage = 3f;//GetComponent<attackStat> ().DamageCalculation();
+			float Damage = this.GetComponent<attackStat> ().DamageCalculation();
 			cTS.vCurrentTarget.GetComponent<defenseStat> ().DamageEquation (Damage);
 
 		
@@ -445,6 +458,7 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 		tStat = tObj.GetComponent<Scr_SkillBall>();
 		tStat.vSkillType = "Bash";
 		this.GetComponent<Scr_CreateEffect>().Activate(this.transform.position,0);
+		cAC.Act("Spell1",Vector3.Normalize (new Vector3 (1f, 0f, 0f)));
 		}
 
 	void PushSpell(){
@@ -458,6 +472,7 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 		Vector3 tTemp = this.transform.position;
 		tTemp.y += 2f;
 		this.GetComponent<Scr_CreateEffect>().Activate(tTemp,0);
+		cAC.Act("Spell3",Vector3.Normalize (new Vector3 (1f, 0f, 0f)));
 	}
 	void IceSpearSpell(){
 		if (cTS.vCurrentTarget != null){
@@ -471,7 +486,8 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 			tStat = tObj.GetComponent<Scr_IceSpear>();
 			tStat.vTarget = cTS.vCurrentTarget.gameObject;
 
-			tStat.vCarriedValue = 3;
+			float Damage = this.GetComponent<attackStat> ().DamageCalculation()*2f;
+			tStat.vCarriedValue = Damage;
 
 
 			Vector3 tGoto;

@@ -44,10 +44,10 @@ public class Scr_CanvasController : MonoBehaviour {
 				vTextList[6].text = "Wait";}
 			else {
 				vTextList[0].text = "";
-				vTextList[1].text = "Health Potion";
+				vTextList[1].text = "Health Potion ("+cG.Global_HealthPotion_Count.ToString() +")";
 				vTextList[2].text = "Next Target";
 				vTextList[3].text = "Teleport Stone";
-				vTextList[4].text = "Elixer";
+				vTextList[4].text = "Elixer ("+cG.Global_ElixerPotion_Count.ToString() +")";
 				vTextList[5].text = "~Item~";
 				vTextList[6].text = "Wait";
 			}
@@ -61,10 +61,10 @@ public class Scr_CanvasController : MonoBehaviour {
 				vTextList[13].text = "Wait";}
 			else {
 				vTextList[7].text = "";
-				vTextList[8].text = "Health Potion";
+				vTextList[8].text = "Health Potion ("+cG.Global_HealthPotion_Count.ToString() +")";
 				vTextList[9].text = "Next Target";
 				vTextList[10].text = "Teleport Stone";
-				vTextList[11].text = "Elixer";
+				vTextList[11].text = "Elixer ("+cG.Global_ElixerPotion_Count.ToString() +")";
 				vTextList[12].text = "~Item~";
 				vTextList[13].text = "Wait";
 			}

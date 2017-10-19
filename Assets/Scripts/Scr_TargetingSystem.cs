@@ -42,11 +42,11 @@ public class Scr_TargetingSystem : MonoBehaviour {
 
 
 		RecheckForTargets ();
-		if (Input.GetKeyDown (KeyCode.Space)) {
-			NextTarget ();
-			Debug.Log ("Next Plez");
+		//if (Input.GetKeyDown (KeyCode.Space)) {
+		//	NextTarget ();
+		//	Debug.Log ("Next Plez");
 			//vTarget
-		}
+		//}
 		if (vEnemiesToTarget == "Antagonist") {
 			switch (this.tag) {
 			case "Warrior":

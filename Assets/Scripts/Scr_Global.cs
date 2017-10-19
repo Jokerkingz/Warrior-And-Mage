@@ -115,6 +115,8 @@ public class Scr_Global : MonoBehaviour {
 					vCurrentTurnState = "PlayerEndAnimate";}
 			break;
 			case "PlayerEndAnimate":
+				vPotionUsed = false;
+				vElixerUsed = false;
 				Global_AnimationFrame = 1f;
 				Those = GameObject.FindGameObjectsWithTag ("Enemy");
 				bool tThereAreAIs = false;
@@ -263,18 +265,29 @@ public class Scr_Global : MonoBehaviour {
 		} else if (Input.GetButton ("WarriorItem"))
 		 	{cCn.vWarrItem += 1f;
 			if (Input.GetAxis ("WarriorAttack") < 0f || Input.GetButton ("WarriorAttack")) {
-				Order = "HealthPotion";
+				//Order = "HealthPotion";
+				if (Global_HealthPotion_Count > 0 && !vPotionUsed){
+					Global_HealthPotion_Count -= 1;
+					Object_Warrior.GetComponent<statManager>().healthRegen(50);
+					vPotionUsed = true;
+				}
+					
 			}
 			if ((Input.GetAxis ("WarriorSkill1") < 0f || Input.GetButton ("WarriorSkill1")) && tTimerA == 0f) {
 				tTimerA = .5f;
-				Order = "Next Target";
+				//Order = "Next Target";
 				Object_Warrior.GetComponent<Scr_TargetingSystem>().NextTarget();
 			}
 			if (Input.GetAxis ("WarriorSkill2") < 0f || Input.GetButton ("WarriorSkill2")) {
 				Order = "TeleportStone";
 			}
-			if (Input.GetAxis ("WarriorSkill2") < 0f || Input.GetButton ("WarriorSkill2")) {
-				Order = "Elixer";
+			if (Input.GetAxis ("WarriorSkill3") > 0f || Input.GetButton ("WarriorSkill3")) {
+				//Order = "Elixer";
+				if (Global_ElixerPotion_Count > 0 && !vElixerUsed){
+					Global_ElixerPotion_Count -= 1;
+					Object_Warrior.GetComponent<statManager>().SpecRegen(50);
+					vElixerUsed = true;
+				}
 			}
 		}
 		return Order;
@@ -312,18 +325,28 @@ public class Scr_Global : MonoBehaviour {
 			else if (Input.GetButton ("MageItem")){
 				{cCn.vMageItem += 1f;
 				if (Input.GetButton ("MageAttack")) {
-					Order = "HealthPotion";
+					//Order = "HealthPotion";
+					if (Global_HealthPotion_Count > 0 && !vPotionUsed){
+						Global_HealthPotion_Count -= 1;
+						Object_Mage.GetComponent<statManager>().healthRegen(50);
+						vPotionUsed = true;
+					}
 					}
 				if (Input.GetButton ("MageSkill1") && tTimerB == 0f) {
 					tTimerB = .5f;
-					Order = "Next Target";
+					//Order = "Next Target";
 					Object_Mage.GetComponent<Scr_TargetingSystem>().NextTarget();
 					}
 				if (Input.GetButton ("MageSkill2")) {
 					Order = "TeleportStone";
 					}
 				if (Input.GetButton ("MageSkill3")) {
-					Order = "Elixer";
+					//Order = "Elixer";
+					if (Global_ElixerPotion_Count > 0 && !vElixerUsed){
+						Global_ElixerPotion_Count -= 1;
+						Object_Mage.GetComponent<statManager>().SpecRegen(50);
+						vElixerUsed = true;
+					}
 					}
 			}
 		}

@@ -10,8 +10,8 @@ public class statManager : MonoBehaviour {
 	public float curHealth;
 
 	//NOTE: Spec refers to either Stamina or Mana
-	public int maxSpec;
-	public int curSpec;
+	public float maxSpec;
+	public float curSpec;
 
 	public int attackLvl;
 	public int defenseLvl;
@@ -170,10 +170,21 @@ public class statManager : MonoBehaviour {
 
 	}
 
-
-	public void SpecDrain()
+public void healthRegen(float health)
 	{
-	curSpec -= 10;
+	curHealth+=health;
+	healthBar.SendMessage ("Appear");
+	}
+
+	public void SpecDrain(float spec)
+	{
+	curSpec -= spec;
+	specBar.SendMessage ("Appear");
+	}
+
+	public void SpecRegen(float spec)
+	{
+	curSpec+=spec;
 	specBar.SendMessage ("Appear");
 	}
 }

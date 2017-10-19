@@ -7,7 +7,7 @@ public class Scr_IceSpear : MonoBehaviour {
 	public GameObject vTarget;
 	public Vector3 vTargetSpot;
 	public float tTemp;
-	public int vCarriedValue;
+	public float vCarriedValue;
 	public bool vDone;
 	// Use this for initialization
 	void Start () {
