@@ -125,8 +125,8 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 				this.GetComponent<statManager>().SpecRegen(4);
 				break;
 			case "Push":
-				if (this.GetComponent<statManager>().curSpec >= 20){
-					this.GetComponent<statManager>().SpecDrain(20);
+				if (this.GetComponent<statManager>().curSpec >= 15){
+					this.GetComponent<statManager>().SpecDrain(15);
 					PushSpell();
 					tSkilling = true;
 				} else 
@@ -134,8 +134,8 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 				vNextVect3 = transform.position;
 				break;
 			case "Bash":
-				if (this.GetComponent<statManager>().curSpec >= 15){
-					this.GetComponent<statManager>().SpecDrain(15);
+				if (this.GetComponent<statManager>().curSpec >= 10){
+					this.GetComponent<statManager>().SpecDrain(10);
 					BashSpell();
 					tSkilling = true;
 				} else 
@@ -143,8 +143,8 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 				vNextVect3 = transform.position;
 				break;
 			case "Ice Spear":
-				if (this.GetComponent<statManager>().curSpec >= 30){
-					this.GetComponent<statManager>().SpecDrain(30);
+				if (this.GetComponent<statManager>().curSpec >= 20){
+					this.GetComponent<statManager>().SpecDrain(20);
 					IceSpearSpell();
 					tSkilling = true;
 				} else 
@@ -238,6 +238,7 @@ public class Scr_ProtagonistAction : MonoBehaviour {
 			Falling();
 	}
 	void Falling(){
+		cAC.Act("Idle",DirectionToPoint(vDirection,1));
 		if (!FindSpot(vGlobal.vFallCheckPoint))
 			{if (vOtherPartner.GetComponent<Scr_ProtagonistAction>().vAnimationState == "Falling")
 				FindSpot(vGlobal.vFallCheckPoint);
